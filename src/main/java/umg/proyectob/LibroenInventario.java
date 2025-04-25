@@ -1,6 +1,6 @@
 package umg.proyectob;
 
-public class Libro {
+public class LibroenInventario {
     
     private String titulo;
     private String autor;

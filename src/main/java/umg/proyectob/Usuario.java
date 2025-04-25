@@ -1,5 +1,7 @@
 package umg.proyectob;
 
+import java.util.ArrayList;
+
 public class Usuario {
 
     /**
@@ -62,5 +64,5 @@ public class Usuario {
     private String nombre;
     private int rol;
     private String password;
-     
+               
 }

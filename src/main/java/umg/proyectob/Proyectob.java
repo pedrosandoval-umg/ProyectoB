@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Proyectob {
 
     public static ArrayList<Usuario> usuarios = new ArrayList<>();
-    public static ArrayList<Libro> libros = new ArrayList<>();
+    public static ArrayList<LibroenInventario> libros = new ArrayList<>();
     public static ArrayList<Cupon> cupones = new ArrayList<>();
 
 

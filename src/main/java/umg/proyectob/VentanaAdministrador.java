@@ -3,8 +3,12 @@ package umg.proyectob;
 
 public class VentanaAdministrador extends javax.swing.JFrame {
 
-    public VentanaAdministrador() {
-        initComponents();
+    private Usuario usuarioActual;
+        public VentanaAdministrador(Usuario usuario) {
+            initComponents();
+            this.usuarioActual = usuario;
+        
+        lblWelcomeAdmin.setText("Bienvenido " + usuarioActual.getNombre()); 
     }
 
     @SuppressWarnings("unchecked")

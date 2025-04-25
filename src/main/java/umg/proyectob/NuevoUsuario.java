@@ -160,7 +160,7 @@ public class NuevoUsuario extends javax.swing.JFrame {
     }
 
     // Validar formato del password
-    if (!validarPassword(password)) {
+    if (!PasswordRequirements.validarPassword(password)) {
         JOptionPane.showMessageDialog(this, "La contraseña debe tener al menos 6 caracteres, una mayúscula, una minúscula y un número.");
         return;
     }

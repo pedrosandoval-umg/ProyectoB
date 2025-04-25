@@ -18,7 +18,7 @@ public class ConsultaLibros extends javax.swing.JFrame {
         
         TableModel tabla = tblBooks.getModel();    
         for (int i = 0; i < Proyectob.libros.size(); i++) {
-            Libro l = Proyectob.libros.get(i);
+            LibroenInventario l = Proyectob.libros.get(i);
             tabla.setValueAt(l.getTitulo(), i, 0);
             tabla.setValueAt(l.getAutor(), i, 1);
             tabla.setValueAt(l.getGenero(), i, 2);
@@ -122,7 +122,7 @@ public class ConsultaLibros extends javax.swing.JFrame {
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         int editar = tblBooks.getSelectedRow();
         if (editar > -1) {
-        Libro l = Proyectob.libros.get(editar);
+        LibroenInventario l = Proyectob.libros.get(editar);
 
         String titulo = l.getTitulo();
         String autor = l.getAutor();

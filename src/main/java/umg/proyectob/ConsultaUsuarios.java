@@ -3,6 +3,8 @@ package umg.proyectob;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import umg.proyectob.PasswordRequirements;
+
 
 public class ConsultaUsuarios extends javax.swing.JFrame {
 
@@ -22,9 +24,7 @@ public class ConsultaUsuarios extends javax.swing.JFrame {
             tabla.setValueAt(u.getNombre(), i, 0);
             tabla.setValueAt(u.getUsuario(), i, 1);
             tabla.setValueAt(u.getRol(), i, 2);
-            tabla.setValueAt(u.getPassword(), i, 3);
-            
-            
+            tabla.setValueAt(u.getPassword(), i, 3);            
         }      
     }    
     
@@ -110,23 +110,7 @@ public class ConsultaUsuarios extends javax.swing.JFrame {
     private void bntCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntCloseActionPerformed
             this.dispose();
     }//GEN-LAST:event_bntCloseActionPerformed
-
-   private boolean validarPassword(String password) {
-    if (password.length() < 6) return false;
-
-    boolean tieneMayus = false;
-    boolean tieneMinus = false;
-    boolean tieneNumero = false;
-
-    for (char c : password.toCharArray()) {
-        if (Character.isUpperCase(c)) tieneMayus = true;
-        else if (Character.isLowerCase(c)) tieneMinus = true;
-        else if (Character.isDigit(c)) tieneNumero = true;
-    }
-
-    return tieneMayus && tieneMinus && tieneNumero;
-}
-    
+   
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         int editar = tblUsers.getSelectedRow();
         if (editar > -1) {
@@ -155,7 +139,7 @@ public class ConsultaUsuarios extends javax.swing.JFrame {
             do {
                 nuevoPassword = JOptionPane.showInputDialog(this, "Nuevo Password:", Password);
                 if (nuevoPassword == null) return; // Cancelación directa
-                if (!validarPassword(nuevoPassword.trim())) {
+                if (!PasswordRequirements.validarPassword(nuevoPassword.trim())) {
                     JOptionPane.showMessageDialog(this, 
                     "La contraseña debe tener al menos 6 caracteres, una letra mayúscula, una minúscula y un número.",
                     "Contraseña inválida", JOptionPane.ERROR_MESSAGE);
