@@ -26,24 +26,11 @@ public class Proyectob {
         ventas1.setPassword("Asd123");
         ventas1.setRol(2); // 
         usuarios.add(ventas1);
-        
-        Usuario ventas2 = new Usuario();
-        ventas2.setNombre("Ventas 2");
-        ventas2.setUsuario("ventas2");
-        ventas2.setPassword("Asd456");
-        ventas2.setRol(2); // 
-        usuarios.add(ventas2);
-        
-        Usuario ventas3 = new Usuario();
-        ventas3.setNombre("Ventas 3");
-        ventas3.setUsuario("ventas3");
-        ventas3.setPassword("Asd789");
-        ventas3.setRol(2); // 
-        usuarios.add(ventas3);
         }
         
     public static void main(String[] args) {
-        Login v = new Login();
-        v.setVisible(true);
-    }  
+        PuntosExtra.cargarTodo();
+            Login v = new Login();
+            v.setVisible(true);
+            }  
     }
