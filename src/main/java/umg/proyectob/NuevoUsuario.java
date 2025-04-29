@@ -1,5 +1,8 @@
 package umg.proyectob;
+
 import javax.swing.JOptionPane;
+import umg.proyectob.PasswordRequirements;
+
 public class NuevoUsuario extends javax.swing.JFrame {
 
     public NuevoUsuario() {
@@ -120,22 +123,6 @@ public class NuevoUsuario extends javax.swing.JFrame {
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnCloseActionPerformed
-
-    private boolean validarPassword(String password) {
-    if (password.length() < 6) return false;
-
-    boolean tieneMayus = false;
-    boolean tieneMinus = false;
-    boolean tieneNumero = false;
-
-    for (char c : password.toCharArray()) {
-        if (Character.isUpperCase(c)) tieneMayus = true;
-        else if (Character.isLowerCase(c)) tieneMinus = true;
-        else if (Character.isDigit(c)) tieneNumero = true;
-    }
-
-    return tieneMayus && tieneMinus && tieneNumero;
-}
     private void btnAddUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddUserActionPerformed
     
     
@@ -161,7 +148,7 @@ public class NuevoUsuario extends javax.swing.JFrame {
 
     // Validar formato del password
     if (!PasswordRequirements.validarPassword(password)) {
-        JOptionPane.showMessageDialog(this, "La contraseña debe tener al menos 6 caracteres, una mayúscula, una minúscula y un número.");
+        JOptionPane.showMessageDialog(this, "La contraseña debe cumplir con una mayúscula, una minúscula,  un número y al menos 6 caracteres.");
         return;
     }
 
@@ -180,7 +167,7 @@ public class NuevoUsuario extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Usuario creado exitosamente.");
     }//GEN-LAST:event_btnAddUserActionPerformed
             
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddUser;
     private javax.swing.JButton btnClose;
