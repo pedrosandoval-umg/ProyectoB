@@ -1,68 +1,42 @@
 package umg.proyectob;
+import java.io.Serializable;
+public class Usuario implements Serializable {
 
-import java.util.ArrayList;
-
-public class Usuario {
-
-    /**
-     * @return the usuario
-     */
+    private String nombre;
+    private String usuario;
+    private int rol;
+    private String password;
+               
+// Getter y Setter de Usuario
     public String getUsuario() {
         return usuario;
     }
-
-    /**
-     * @param usuario the usuario to set
-     */
     public void setUsuario(String usuario) {
         this.usuario = usuario;
     }
 
-    /**
-     * @return the nombre
-     */
+// Getter y Setter de Nombre
     public String getNombre() {
         return nombre;
     }
-
-    /**
-     * @param nombre the nombre to set
-     */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    /**
-     * @return the rol
-     */
+// Getter y Setter de Rol   
     public int getRol() {
         return rol;
     }
-
-    /**
-     * @param rol the rol to set
-     */
     public void setRol(int rol) {
         this.rol = rol;
     }
 
-    /**
-     * @return the password
-     */
+// Getter y Setter de Password 
     public String getPassword() {
         return password;
     }
-
-    /**
-     * @param password the password to set
-     */
     public void setPassword(String password) {
         this.password = password;
     }
    
-    private String usuario;
-    private String nombre;
-    private int rol;
-    private String password;
-               
 }
