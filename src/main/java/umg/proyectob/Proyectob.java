@@ -1,12 +1,13 @@
 package umg.proyectob;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Proyectob {
 
-    public static ArrayList<Usuario> usuarios = new ArrayList<>();
-    public static ArrayList<LibroenInventario> libros = new ArrayList<>();
-    public static ArrayList<Cupon> cupones = new ArrayList<>();
+    public static List<Usuario> usuarios = new ArrayList<>();
+    public static List<LibroenInventario> libros = new ArrayList<>();
+    public static List<Cupon> cupones = new ArrayList<>();
 
 
     static {
