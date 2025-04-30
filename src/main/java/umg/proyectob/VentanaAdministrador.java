@@ -7,8 +7,16 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         public VentanaAdministrador(Usuario usuario) {
             initComponents();
             this.usuarioActual = usuario;
-        
-        lblWelcomeAdmin.setText("Bienvenido " + usuarioActual.getNombre()); 
+            lblWelcomeAdmin.setText("Bienvenido " + usuarioActual.getNombre()); 
+            
+            this.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent e) {
+                PuntosExtra.guardarTodo();
+                System.out.println("Datos guardados correctamente al salir.");
+    }
+});
+
     }
 
     @SuppressWarnings("unchecked")

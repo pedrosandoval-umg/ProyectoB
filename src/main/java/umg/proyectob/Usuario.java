@@ -7,6 +7,17 @@ public class Usuario implements Serializable {
     private int rol;
     private String password;
                
+        public Usuario() {
+        // Constructor vacío requerido por Serializable
+    }
+
+    public Usuario(String nombre, String usuario, String contraseña, int rol) {
+        this.nombre = nombre;
+        this.usuario = usuario;
+        this.password = contraseña;
+        this.rol = rol;
+    }
+    
 // Getter y Setter de Usuario
     public String getUsuario() {
         return usuario;

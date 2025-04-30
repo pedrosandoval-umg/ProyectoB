@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class PuntosExtra {
+    
+        public static List<Usuario> usuarios = new ArrayList<>();
 
         public static void guardarTodo() {
         guardarArchivo(Proyectob.usuarios, "usuarios.dat");
@@ -13,7 +15,8 @@ public class PuntosExtra {
          }
 
         public static void cargarTodo() {
-        Proyectob.usuarios = cargarArchivo("usuarios.dat");
+        cargarUsuariosDesdeArchivo();  // Aquí se asegura la creación de admin
+        // Proyectob.usuarios = cargarArchivo("usuarios.dat");
         Proyectob.libros = cargarArchivo("libros.dat");
         Proyectob.cupones = cargarArchivo("cupones.dat");
         }
@@ -27,7 +30,7 @@ public class PuntosExtra {
             System.err.println("Error al guardar en archivo " + rutaArchivo + ": " + e.getMessage());
         }
     }
-
+    
     @SuppressWarnings("unchecked")
     public static <T> List<T> cargarArchivo(String rutaArchivo) {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(rutaArchivo))) {
@@ -37,5 +40,25 @@ public class PuntosExtra {
             return new java.util.ArrayList<>();
         }
     }
+
+    public static void cargarUsuariosDesdeArchivo() {
+    File archivo = new File("usuarios.dat");
+
+    if (archivo.exists()) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivo))) {
+            usuarios = (ArrayList<Usuario>) ois.readObject();  // usa la de la clase
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error al leer archivo de usuarios: " + e.getMessage());
+            usuarios = new ArrayList<>();
+        }
+    } else {
+        usuarios = new ArrayList<>();
+        }
+    if (usuarios.isEmpty()) {
+        Usuario admin = new Usuario("Administrador", "admin", "admin", 1);
+         usuarios.add(admin);
+        }
+        Proyectob.usuarios = usuarios;
+        }
 
     }

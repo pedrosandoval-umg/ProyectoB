@@ -120,7 +120,6 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLogInActionPerformed
 
     private void btnForgottenPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnForgottenPasswordActionPerformed
-        // TODO add your handling code here:
         new RecuperarPassword().setVisible(true);
     }//GEN-LAST:event_btnForgottenPasswordActionPerformed
   
