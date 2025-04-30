@@ -159,6 +159,7 @@ public class NuevoLibro extends javax.swing.JFrame {
         l.setStock(stock);
         
         Proyectob.libros.add(l);
+        PuntosExtra.guardarTodo();
 
         JOptionPane.showMessageDialog(this, "Libro creado exitosamente.");
     }//GEN-LAST:event_btnAddBookActionPerformed

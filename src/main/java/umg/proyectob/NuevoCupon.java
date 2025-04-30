@@ -225,6 +225,7 @@ public class NuevoCupon extends javax.swing.JFrame {
         c.setActivo(activo);
 
         Proyectob.cupones.add(c);
+        PuntosExtra.guardarTodo();
         JOptionPane.showMessageDialog(this, "Cupón '" + codigo + "' creado exitosamente.");
         this.dispose();
     

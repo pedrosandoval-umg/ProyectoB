@@ -163,6 +163,7 @@ public class NuevoUsuario extends javax.swing.JFrame {
         u.setUsuario(usuario);
         u.setPassword(password);
         Proyectob.usuarios.add(u);
+        PuntosExtra.guardarTodo();
               
         JOptionPane.showMessageDialog(this, "Usuario creado exitosamente.");
     }//GEN-LAST:event_btnAddUserActionPerformed
