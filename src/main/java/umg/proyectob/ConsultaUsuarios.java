@@ -5,7 +5,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import umg.proyectob.PasswordRequirements;
 
-
 public class ConsultaUsuarios extends javax.swing.JFrame {
 
     public ConsultaUsuarios() {

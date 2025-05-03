@@ -37,6 +37,7 @@ umg/proyectob/ConsultaCupon$1.class
 umg/proyectob/NuevoLibro$1.class
 umg/proyectob/ConsultaLibros$1.class
 umg/proyectob/Login.class
+umg/proyectob/PerfilUsuario$3.class
 umg/proyectob/RecuperarPassword.class
 umg/proyectob/VentanaVendedor$3.class
 umg/proyectob/NuevoCupon$1.class
@@ -47,6 +48,7 @@ umg/proyectob/ConsultaUsuarios.class
 umg/proyectob/VentanaAdministrador$4.class
 umg/proyectob/NuevoLibro.class
 umg/proyectob/RegistrarVenta$2.class
+umg/proyectob/Direcciones.class
 umg/proyectob/VentanaAdministrador$7.class
 umg/proyectob/NuevoCupon$3.class
 umg/proyectob/NuevoUsuario$1.class
