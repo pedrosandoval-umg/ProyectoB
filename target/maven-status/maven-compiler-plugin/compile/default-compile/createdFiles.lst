@@ -5,6 +5,7 @@ umg/proyectob/VentanaAdministrador$8.class
 umg/proyectob/PuntosExtra.class
 umg/proyectob/VentanaVendedor$1.class
 umg/proyectob/Login$1.class
+umg/proyectob/PerfilUsuario$2.class
 umg/proyectob/NuevoLibro$2.class
 umg/proyectob/ConsultaCupon$3.class
 umg/proyectob/NuevoUsuario$2.class
@@ -21,6 +22,7 @@ umg/proyectob/NuevoCupon$2.class
 umg/proyectob/ConsultaLibros.class
 umg/proyectob/VentanaAdministrador.class
 umg/proyectob/VentanaVendedor$4.class
+umg/proyectob/RegistrarVenta$4.class
 umg/proyectob/NuevoUsuario.class
 umg/proyectob/ConsultaUsuarios$1.class
 umg/proyectob/VentanaAdministrador$6.class
@@ -46,6 +48,7 @@ umg/proyectob/VentanaAdministrador$4.class
 umg/proyectob/NuevoLibro.class
 umg/proyectob/RegistrarVenta$2.class
 umg/proyectob/VentanaAdministrador$7.class
+umg/proyectob/NuevoCupon$3.class
 umg/proyectob/NuevoUsuario$1.class
 umg/proyectob/VentanaAdministrador$1.class
 umg/proyectob/ConsultaLibros$2.class

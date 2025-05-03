@@ -32,9 +32,10 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         jMenuBar2 = new javax.swing.JMenuBar();
         menuConsultas = new javax.swing.JMenu();
         optCheckUsers = new javax.swing.JMenuItem();
-        optCheckBooks = new javax.swing.JMenuItem();
         OptCheckCupons = new javax.swing.JMenuItem();
+        optCheckBooks = new javax.swing.JMenuItem();
         menuEmpty = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -49,28 +50,28 @@ public class VentanaAdministrador extends javax.swing.JFrame {
             }
         });
 
-        btnAddUser.setText("Crear nuevo usuario");
+        btnAddUser.setText("Crear Usuario");
         btnAddUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddUserActionPerformed(evt);
             }
         });
 
-        btnAddBook.setText("Crear Nuevo Libro");
+        btnAddBook.setText("Crear Libro");
         btnAddBook.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddBookActionPerformed(evt);
             }
         });
 
-        btnCupon.setText("Crear Nuevo Cupon");
+        btnCupon.setText("Crear Cupon");
         btnCupon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCuponActionPerformed(evt);
             }
         });
 
-        menuConsultas.setText("File");
+        menuConsultas.setText("Consultas");
 
         optCheckUsers.setText("Consultar Usuarios");
         optCheckUsers.addActionListener(new java.awt.event.ActionListener() {
@@ -80,14 +81,6 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         });
         menuConsultas.add(optCheckUsers);
 
-        optCheckBooks.setText("Consulta LIbros");
-        optCheckBooks.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                optCheckBooksActionPerformed(evt);
-            }
-        });
-        menuConsultas.add(optCheckBooks);
-
         OptCheckCupons.setText("Consulta Cupones");
         OptCheckCupons.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -96,9 +89,21 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         });
         menuConsultas.add(OptCheckCupons);
 
+        optCheckBooks.setText("Consulta Libros");
+        optCheckBooks.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                optCheckBooksActionPerformed(evt);
+            }
+        });
+        menuConsultas.add(optCheckBooks);
+
         jMenuBar2.add(menuConsultas);
 
-        menuEmpty.setText("Edit");
+        menuEmpty.setText("Reportes");
+
+        jMenuItem2.setText("Reporte de Ventas");
+        menuEmpty.add(jMenuItem2);
+
         jMenuBar2.add(menuEmpty);
 
         setJMenuBar(jMenuBar2);
@@ -134,7 +139,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 .addComponent(btnAddBook)
                 .addGap(18, 18, 18)
                 .addComponent(btnCupon)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
                 .addComponent(btnClose)
                 .addContainerGap())
         );
@@ -186,6 +191,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
     private javax.swing.JButton btnCupon;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JLabel lblWelcomeAdmin;
     private javax.swing.JMenu menuConsultas;
     private javax.swing.JMenu menuEmpty;

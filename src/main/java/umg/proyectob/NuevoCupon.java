@@ -1,4 +1,8 @@
 package umg.proyectob;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 import javax.swing.JOptionPane;
 
 
@@ -33,6 +37,8 @@ public class NuevoCupon extends javax.swing.JFrame {
         txtValor = new javax.swing.JTextField();
         btnClose = new javax.swing.JButton();
         btnAdd = new javax.swing.JButton();
+        txtFechaVencimiento = new javax.swing.JTextField();
+        lblFechaVencimiento = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,6 +70,14 @@ public class NuevoCupon extends javax.swing.JFrame {
             }
         });
 
+        txtFechaVencimiento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFechaVencimientoActionPerformed(evt);
+            }
+        });
+
+        lblFechaVencimiento.setText("Fecha Vencimiento");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -71,6 +85,9 @@ public class NuevoCupon extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnClose))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -82,7 +99,8 @@ public class NuevoCupon extends javax.swing.JFrame {
                                     .addComponent(lblValue)
                                     .addComponent(lblDescription)
                                     .addComponent(lblActive)
-                                    .addComponent(lblType))
+                                    .addComponent(lblType)
+                                    .addComponent(lblFechaVencimiento))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtDescription)
@@ -90,12 +108,10 @@ public class NuevoCupon extends javax.swing.JFrame {
                             .addComponent(txtValor)
                             .addComponent(ComboBoxPorcenoTotal, 0, 80, Short.MAX_VALUE)
                             .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(ToggleOnOff, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(171, 171, 171))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnClose)))
-                .addContainerGap(21, Short.MAX_VALUE))
+                            .addComponent(ToggleOnOff, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtFechaVencimiento))
+                        .addGap(171, 171, 171)))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -117,7 +133,11 @@ public class NuevoCupon extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(ComboBoxPorcenoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblType))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtFechaVencimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblFechaVencimiento))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(ToggleOnOff)
                     .addComponent(lblActive))
@@ -181,12 +201,25 @@ public class NuevoCupon extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Cupón '" + codigo + "' creado exitosamente.");
     }//GEN-LAST:event_btnAddActionPerformed
 
+    private void txtFechaVencimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaVencimientoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFechaVencimientoActionPerformed
+
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {
         String codigo = txtCode.getText().trim();
         String descripcion = txtDescription.getText().trim();
         String valorTexto = txtValor.getText().trim(); 
         boolean activo = ToggleOnOff.isSelected();
         String tipo = ComboBoxPorcenoTotal.getSelectedItem().toString();
+        String fechaTexto = txtFechaVencimiento.getText().trim();
+        LocalDate fechaVencimiento;
+        
+            try {
+        fechaVencimiento = LocalDate.parse(fechaTexto, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        } catch (DateTimeParseException e) {
+        JOptionPane.showMessageDialog(this, "Fecha de vencimiento inválida. Usa formato yyyy-MM-dd.");
+        return;
+}
         
 
         if (codigo.isEmpty() || descripcion.isEmpty() || txtValor.getText().isEmpty()) {
@@ -231,6 +264,8 @@ public class NuevoCupon extends javax.swing.JFrame {
     
 }
     
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboBoxPorcenoTotal;
     private javax.swing.JToggleButton ToggleOnOff;
@@ -239,10 +274,12 @@ public class NuevoCupon extends javax.swing.JFrame {
     private javax.swing.JLabel lblActive;
     private javax.swing.JLabel lblCode;
     private javax.swing.JLabel lblDescription;
+    private javax.swing.JLabel lblFechaVencimiento;
     private javax.swing.JLabel lblType;
     private javax.swing.JLabel lblValue;
     private javax.swing.JTextField txtCode;
     private javax.swing.JTextField txtDescription;
+    private javax.swing.JTextField txtFechaVencimiento;
     private javax.swing.JTextField txtValor;
     // End of variables declaration//GEN-END:variables
 }

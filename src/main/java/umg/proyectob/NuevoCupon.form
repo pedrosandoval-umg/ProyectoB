@@ -26,6 +26,10 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="btnClose" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
@@ -39,6 +43,7 @@
                                   <Component id="lblDescription" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblActive" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblType" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblFechaVencimiento" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
@@ -50,15 +55,12 @@
                           <Component id="ComboBoxPorcenoTotal" pref="80" max="32767" attributes="0"/>
                           <Component id="btnAdd" alignment="0" max="32767" attributes="0"/>
                           <Component id="ToggleOnOff" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtFechaVencimiento" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="171" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      <Component id="btnClose" min="-2" max="-2" attributes="0"/>
-                  </Group>
               </Group>
-              <EmptySpace pref="21" max="32767" attributes="0"/>
+              <EmptySpace pref="13" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -87,7 +89,12 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="23" max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="txtFechaVencimiento" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblFechaVencimiento" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="29" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="ToggleOnOff" min="-2" max="-2" attributes="0"/>
                   <Component id="lblActive" min="-2" max="-2" attributes="0"/>
@@ -168,6 +175,16 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtFechaVencimiento">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFechaVencimientoActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFechaVencimiento">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Fecha Vencimiento"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

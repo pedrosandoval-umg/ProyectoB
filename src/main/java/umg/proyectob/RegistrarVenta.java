@@ -1,6 +1,7 @@
 package umg.proyectob;
 
 import javax.swing.JOptionPane;
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -29,17 +30,36 @@ public class RegistrarVenta extends javax.swing.JFrame {
 }
         ComboBoxLibros.addActionListener(e -> actualizarPrecioUnitario());
         txtMonto.addActionListener(e -> actualizarTotal());
+        
+        ComboCupones.removeAllItems();
+        System.out.println("Cupones cargados: " + Proyectob.cupones.size());      
+        for (Cupon c : Proyectob.cupones) {
+            if (c.isActivo() && (c.getFechaVencimiento() == null || !c.getFechaVencimiento().isBefore(LocalDate.now()))) {
+            ComboCupones.addItem(c.getCodigo());
+                }
+            }
     }    
  
-    private LocalDateTime validarFechaIngresada(String textoFecha) {
-    try {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd").withResolverStyle(java.time.format.ResolverStyle.STRICT);
-        return LocalDate.parse(textoFecha, formatter).atStartOfDay();
-    } catch (DateTimeParseException e) {
-        JOptionPane.showMessageDialog(this, "Formato de fecha inválido. Usa Año/mes/dia, por ejemplo: 2024/12/31");
-        return null;
+    private LocalDate validarFechaIngresada(String textoFecha) {
+        List<DateTimeFormatter> formatos = Arrays.asList(
+        DateTimeFormatter.ofPattern("yyyy-MM-dd"),
+        DateTimeFormatter.ofPattern("dd/MM/yyyy"),
+        DateTimeFormatter.ofPattern("dd-MM-yyyy"),
+        DateTimeFormatter.ofPattern("yy/MM/dd")  // opcional
+    );
+
+    for (DateTimeFormatter formatter : formatos) {
+        try {
+            return LocalDate.parse(textoFecha, formatter);
+        } catch (DateTimeParseException e) {
+            // Probar con el siguiente formato
+        }
     }
-}
+
+    JOptionPane.showMessageDialog(this,
+        "Formato de fecha inválido. Usa por ejemplo: 2025-05-03, 03/05/2025, o 24/12/31");
+    return null;
+    }
     private String generarIDFactura() {
     java.time.LocalDateTime ahora = java.time.LocalDateTime.now();
     java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("ddMMyyHHmmss");
@@ -92,7 +112,7 @@ public class RegistrarVenta extends javax.swing.JFrame {
     private void agregarAlCarrito() {
             // Validar fecha
     String fechaTexto = txtDate.getText().trim();
-    LocalDateTime fechaVenta = validarFechaIngresada(fechaTexto);
+    LocalDate fechaVenta = validarFechaIngresada(fechaTexto);
     if (fechaVenta == null) return;
     
     String tituloSeleccionado = (String) ComboBoxLibros.getSelectedItem();
@@ -170,7 +190,7 @@ public class RegistrarVenta extends javax.swing.JFrame {
     private void confirmarVenta() {
         
     String fechaTexto = txtDate.getText().trim();
-        LocalDateTime fechaVenta = validarFechaIngresada(fechaTexto);
+        LocalDate fechaVenta = validarFechaIngresada(fechaTexto);
         if (fechaVenta == null) return;
     
         if (carrito.isEmpty()) {
@@ -187,6 +207,10 @@ public class RegistrarVenta extends javax.swing.JFrame {
     lblTotalIndividual.setText("Total a Pagar");
     txtMonto.setText("");
     }
+    
+    private Cupon cuponAplicado = null;
+    private double totalConDescuento = 0.0;
+
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -217,6 +241,9 @@ public class RegistrarVenta extends javax.swing.JFrame {
         txtDate = new javax.swing.JTextField();
         lblID_Factura = new javax.swing.JLabel();
         lblSinIVA = new javax.swing.JLabel();
+        btnAPlicarCupon = new javax.swing.JButton();
+        lblTotConDescuento = new javax.swing.JLabel();
+        ComboCupones = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -270,6 +297,8 @@ public class RegistrarVenta extends javax.swing.JFrame {
             }
         });
 
+        lblTotalAllBooks.setBackground(new java.awt.Color(60, 60, 60));
+        lblTotalAllBooks.setOpaque(true);
         lblTotalAllBooks.setPreferredSize(new java.awt.Dimension(300, 15));
 
         lblID_NIT.setText("NIT");
@@ -282,11 +311,26 @@ public class RegistrarVenta extends javax.swing.JFrame {
 
         lblID_Factura.setText(" ");
 
+        btnAPlicarCupon.setText("Cupon");
+        btnAPlicarCupon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAPlicarCuponActionPerformed(evt);
+            }
+        });
+
+        lblTotConDescuento.setBackground(new java.awt.Color(60, 60, 60));
+        lblTotConDescuento.setOpaque(true);
+        lblTotConDescuento.setPreferredSize(new java.awt.Dimension(115, 15));
+
+        ComboCupones.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jScrollPane2)
+                .addGap(26, 26, 26))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -294,8 +338,7 @@ public class RegistrarVenta extends javax.swing.JFrame {
                         .addComponent(lblLibro)
                         .addGap(18, 18, 18)
                         .addComponent(ComboBoxLibros, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAddtoCart))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -310,14 +353,14 @@ public class RegistrarVenta extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(txtNombre_Cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
+                                .addComponent(lblPriceperUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(lblInstructions)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(lblNombreUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblPriceperUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                                 .addComponent(lblAddress)
@@ -332,20 +375,32 @@ public class RegistrarVenta extends javax.swing.JFrame {
                                                 .addComponent(lblTotalIndividual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(18, 18, 18)
-                                        .addComponent(lblDate)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(lblDate)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(btnAddtoCart))
                                         .addGap(20, 20, 20))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(lblSinIVA, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(lblTotConDescuento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(lblTotalAllBooks, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnAPlicarCupon)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(ComboCupones, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(837, 837, 837)
                                         .addComponent(btnConfirm)
                                         .addGap(18, 18, 18)
-                                        .addComponent(btnClose))
-                                    .addComponent(lblTotalAllBooks, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblSinIVA, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(btnClose)))
+                                .addGap(0, 10, Short.MAX_VALUE)))
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -381,16 +436,20 @@ public class RegistrarVenta extends javax.swing.JFrame {
                         .addComponent(lblTotalIndividual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnAddtoCart))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
                 .addComponent(lblSinIVA)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblTotConDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblTotalAllBooks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+                .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnConfirm)
                     .addComponent(btnClose)
-                    .addComponent(btnConfirm))
-                .addContainerGap())
+                    .addComponent(btnAPlicarCupon)
+                    .addComponent(ComboCupones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
 
         pack();
@@ -407,9 +466,51 @@ public class RegistrarVenta extends javax.swing.JFrame {
     private void btnAddtoCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddtoCartActionPerformed
             agregarAlCarrito();
     }//GEN-LAST:event_btnAddtoCartActionPerformed
+
+    private void btnAPlicarCuponActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAPlicarCuponActionPerformed
+        // TODO add your handling code here:
+       if (cuponAplicado != null) {
+        JOptionPane.showMessageDialog(this, "Ya se ha aplicado un cupón: " + cuponAplicado.getCodigo());
+        return;
+    }
+
+    String codigoSeleccionado = (String) ComboCupones.getSelectedItem();
+    if (codigoSeleccionado == null) {
+        JOptionPane.showMessageDialog(this, "Seleccione un cupón.");
+        return;
+    }
+
+    Cupon cupon = Proyectob.cupones.stream()
+        .filter(c -> c.getCodigo().equalsIgnoreCase(codigoSeleccionado))
+        .findFirst()
+        .orElse(null);
+
+    if (cupon == null) {
+        JOptionPane.showMessageDialog(this, "Error interno: Cupón no encontrado.");
+        return;
+    }
+
+    double total = 0;
+    for (DetalleVenta d : carrito) {
+        total += d.getSubtotal();
+    }
+
+    double descuento = cupon.isEsPorcentaje()
+        ? total * (cupon.getValor() / 100)
+        : cupon.getValor();
+
+    totalConDescuento = Math.max(0, total - descuento);
+    cuponAplicado = cupon;
+
+    lblTotConDescuento.setText("Total con descuento: Q" + String.format("%.2f", totalConDescuento));
+    JOptionPane.showMessageDialog(this, "Cupón aplicado exitosamente.");      
+           
+    }//GEN-LAST:event_btnAPlicarCuponActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboBoxLibros;
+    private javax.swing.JComboBox<String> ComboCupones;
+    private javax.swing.JButton btnAPlicarCupon;
     private javax.swing.JButton btnAddtoCart;
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnConfirm;
@@ -426,6 +527,7 @@ public class RegistrarVenta extends javax.swing.JFrame {
     private javax.swing.JLabel lblNombre_Cliente;
     private javax.swing.JLabel lblPriceperUnit;
     private javax.swing.JLabel lblSinIVA;
+    private javax.swing.JLabel lblTotConDescuento;
     private javax.swing.JLabel lblTotalAllBooks;
     private javax.swing.JLabel lblTotalIndividual;
     private javax.swing.JTable tblCart;

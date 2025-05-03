@@ -1,6 +1,7 @@
 package umg.proyectob;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime; 
 import java.time.format.DateTimeFormatter; // <-- Para formatear la fecha y crear el IDFactura
 
@@ -14,9 +15,9 @@ public class DetalleVenta implements Serializable {
     private LibroenInventario libro;
     private int cantidad;
     private String ID_Vendedor;
-    private LocalDateTime fechaVenta;
+    private LocalDate fechaVenta;
 
-    public DetalleVenta(String ID_NIT, String ID_NombreCliente, String ID_Direccion, int item, LibroenInventario libro, int cantidad, LocalDateTime fechaVenta, String ID_Vendedor) {
+    public DetalleVenta(String ID_NIT, String ID_NombreCliente, String ID_Direccion, int item, LibroenInventario libro, int cantidad, LocalDate fechaVenta, String ID_Vendedor) {
         this.ID_NIT = ID_NIT;
         this.ID_NombreCliente = ID_NombreCliente;
         this.ID_Direccion = ID_Direccion;
@@ -30,7 +31,7 @@ public class DetalleVenta implements Serializable {
 
     
     private String generarIDFactura() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyHHmmss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy");
         return fechaVenta.format(formatter);
     }
     
@@ -63,7 +64,7 @@ public class DetalleVenta implements Serializable {
     public double getSubtotal() {
         return libro.getPrecio() * cantidad;
     }
-    public LocalDateTime getFechaVenta() {
+    public LocalDate getFechaVenta() {
         return fechaVenta;
     }
     public LibroenInventario getLibro() {

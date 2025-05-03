@@ -1,5 +1,6 @@
 package umg.proyectob;
 import java.io.Serializable;
+import java.time.LocalDate;
 public class Cupon implements Serializable {
 
     private String codigo;
@@ -7,6 +8,9 @@ public class Cupon implements Serializable {
     private double valor; 
     private boolean esPorcentaje;
     private boolean activo; 
+    private LocalDate fechaVencimiento;
+
+    
    
     public String getCodigo() {
         return codigo;
@@ -38,6 +42,13 @@ public class Cupon implements Serializable {
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
+    public LocalDate getFechaVencimiento() {
+    return fechaVencimiento;
+    }
+    public void setFechaVencimiento(LocalDate fechaVencimiento) {
+        this.fechaVencimiento = fechaVencimiento;
+    }
+
     
     
 }
