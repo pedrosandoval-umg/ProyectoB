@@ -34,8 +34,8 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         optCheckUsers = new javax.swing.JMenuItem();
         OptCheckCupons = new javax.swing.JMenuItem();
         optCheckBooks = new javax.swing.JMenuItem();
-        menuEmpty = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        menuReporte = new javax.swing.JMenu();
+        optCheckReports = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -99,12 +99,17 @@ public class VentanaAdministrador extends javax.swing.JFrame {
 
         jMenuBar2.add(menuConsultas);
 
-        menuEmpty.setText("Reportes");
+        menuReporte.setText("Reportes");
 
-        jMenuItem2.setText("Reporte de Ventas");
-        menuEmpty.add(jMenuItem2);
+        optCheckReports.setText("Reporte de Ventas");
+        optCheckReports.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                optCheckReportsActionPerformed(evt);
+            }
+        });
+        menuReporte.add(optCheckReports);
 
-        jMenuBar2.add(menuEmpty);
+        jMenuBar2.add(menuReporte);
 
         setJMenuBar(jMenuBar2);
 
@@ -175,13 +180,17 @@ public class VentanaAdministrador extends javax.swing.JFrame {
     private void btnCuponActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCuponActionPerformed
         NuevoCupon cpn = new NuevoCupon();
         cpn.setVisible(true);
-        
     }//GEN-LAST:event_btnCuponActionPerformed
 
     private void OptCheckCuponsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OptCheckCuponsActionPerformed
         ConsultaCupon cpn = new ConsultaCupon();
         cpn.setVisible(true);
     }//GEN-LAST:event_OptCheckCuponsActionPerformed
+
+    private void optCheckReportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optCheckReportsActionPerformed
+        ReportedeVentas rdv = new ReportedeVentas();
+        rdv.setVisible(true);
+    }//GEN-LAST:event_optCheckReportsActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem OptCheckCupons;
@@ -191,11 +200,11 @@ public class VentanaAdministrador extends javax.swing.JFrame {
     private javax.swing.JButton btnCupon;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JLabel lblWelcomeAdmin;
     private javax.swing.JMenu menuConsultas;
-    private javax.swing.JMenu menuEmpty;
+    private javax.swing.JMenu menuReporte;
     private javax.swing.JMenuItem optCheckBooks;
+    private javax.swing.JMenuItem optCheckReports;
     private javax.swing.JMenuItem optCheckUsers;
     // End of variables declaration//GEN-END:variables
 }

@@ -26,8 +26,6 @@ public class ConsultaLibros extends javax.swing.JFrame {
             tabla.setValueAt(precio2, i, 3);
             tabla.setValueAt(l.getStock(), i, 4);
         }
-        
-        
     }
 
     @SuppressWarnings("unchecked")

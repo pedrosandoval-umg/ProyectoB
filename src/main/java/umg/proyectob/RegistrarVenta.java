@@ -16,14 +16,17 @@ import java.util.ArrayList;
 public class RegistrarVenta extends javax.swing.JFrame {
 
     private List<DetalleVenta> carrito = new ArrayList<>();
-    
     private Usuario usuarioActual;
+    private String numeroFacturaGenerado;
+
     public RegistrarVenta(Usuario usuario) {
         initComponents();
-        this.usuarioActual = usuario;
         
+        this.usuarioActual = usuario;
         lblNombreUsuario.setText("Vendedor: " + usuarioActual.getNombre());
-        lblID_Factura.setText("ID Factura: " + generarIDFactura());             
+        this.numeroFacturaGenerado = generarIDFactura();
+            lblID_Factura.setText("ID Factura: " + numeroFacturaGenerado);
+    
         ComboBoxLibros.removeAllItems();
         for (LibroenInventario libro : Proyectob.libros) {
         ComboBoxLibros.addItem(libro.getTitulo());
@@ -197,6 +200,40 @@ public class RegistrarVenta extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "No hay productos en el carrito.");
         return;
     }
+        
+        
+        String numeroFactura = numeroFacturaGenerado;
+        // Obtener datos del cliente
+        String nombreCliente = txtNombre_Cliente.getText().trim();
+        String nit = txtID_NIT.getText().trim();
+        String direccion = txtAddress.getText().trim();
+
+        // Copiar los detalles del carrito
+        List<DetalleVenta> detallesActuales = new ArrayList<>(carrito);
+
+        // Calcular totales
+        double totalSinIva = 0;
+        for (DetalleVenta d : carrito) {
+            totalSinIva += d.getSubtotal();
+        }
+        totalSinIva = Math.round(totalSinIva / 1.12 * 100.0) / 100.0;
+        double totalFinal = (cuponAplicado == null) ? totalSinIva * 1.12 : totalConDescuento;
+
+        // Crear la venta
+        CompiladoVenta venta = new CompiladoVenta(
+            numeroFactura,
+            nombreCliente,
+            nit,
+            direccion,
+            totalSinIva,
+            totalFinal,
+            usuarioActual,
+            fechaVenta,
+            detallesActuales
+        );
+
+        // Guardar en lista global
+        Proyectob.ventas.add(venta);
 
        JOptionPane.showMessageDialog(this, "Venta Exitosa");
        PuntosExtra.guardarArchivo(carrito, "Reporte_Ventas.dat");
@@ -209,7 +246,7 @@ public class RegistrarVenta extends javax.swing.JFrame {
     }
     
     private Cupon cuponAplicado = null;
-    private double totalConDescuento = 0.0;
+    private double totalConDescuento = 0.00;
 
     
     @SuppressWarnings("unchecked")
