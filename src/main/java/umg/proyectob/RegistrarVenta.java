@@ -234,6 +234,8 @@ public class RegistrarVenta extends javax.swing.JFrame {
 
         // Guardar en lista global
         Proyectob.ventas.add(venta);
+        PuntosExtra.guardarArchivo(Proyectob.ventas, "ventas.dat");
+
 
        JOptionPane.showMessageDialog(this, "Venta Exitosa");
        PuntosExtra.guardarArchivo(carrito, "Reporte_Ventas.dat");

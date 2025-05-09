@@ -12,6 +12,7 @@ public class PuntosExtra {
         guardarArchivo(Proyectob.usuarios, "usuarios.dat");
         guardarArchivo(Proyectob.libros, "libros.dat");
         guardarArchivo(Proyectob.cupones, "cupones.dat");
+        guardarArchivo(Proyectob.ventas, "ventas.dat");
          }
 
         public static void cargarTodo() {
@@ -19,6 +20,7 @@ public class PuntosExtra {
         // Proyectob.usuarios = cargarArchivo("usuarios.dat");
         Proyectob.libros = cargarArchivo("libros.dat");
         Proyectob.cupones = cargarArchivo("cupones.dat");
+        Proyectob.ventas = cargarArchivo("ventas.dat");
         }
 
 

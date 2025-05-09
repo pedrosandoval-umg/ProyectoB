@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter; // <-- Para formatear la fecha y crear el IDFactura
 
 public class DetalleVenta implements Serializable {
+    private static final long serialVersionUID = 1L;
     
     private String IDFactura;
     private String ID_NIT;  
