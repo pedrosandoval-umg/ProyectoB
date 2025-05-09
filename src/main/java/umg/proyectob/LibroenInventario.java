@@ -2,6 +2,8 @@ package umg.proyectob;
 import java.io.Serializable;
 public class LibroenInventario implements Serializable {
     
+    private static final long serialVersionUID = 1L;
+
     private String titulo;
     private String autor;
     private String genero;
