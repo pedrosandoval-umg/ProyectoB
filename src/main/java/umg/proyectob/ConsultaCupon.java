@@ -3,6 +3,8 @@ package umg.proyectob;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.JOptionPane;
+import java.time.format.DateTimeParseException;
+import java.time.LocalDate;
 
 public class ConsultaCupon extends javax.swing.JFrame {
 
@@ -12,7 +14,7 @@ public class ConsultaCupon extends javax.swing.JFrame {
     }
 
     private void cargarTabla() {
-        String[] encabezados = {"Codigo", "Descripcion", "Valor", "Tipo", "Activo"};
+        String[] encabezados = {"Codigo", "Descripcion", "Valor", "Tipo", "Activo", "Fecha"};
         DefaultTableModel modelo = new DefaultTableModel(encabezados, Proyectob.cupones.size());
         tblCupons.setModel(modelo);
 
@@ -24,6 +26,7 @@ public class ConsultaCupon extends javax.swing.JFrame {
             tabla.setValueAt(String.format("Q.%.2f", cpn.getValor()), i, 2);
             tabla.setValueAt(cpn.isEsPorcentaje() ? "Porcentaje" : "Monto fijo", i, 3);
             tabla.setValueAt(cpn.isActivo() ? "Sí" : "No", i, 4);
+            tabla.setValueAt(cpn.getFechaVencimiento() != null ? cpn.getFechaVencimiento().toString() : "Sin fecha", i, 5);
         }
     }
     
@@ -119,6 +122,8 @@ public class ConsultaCupon extends javax.swing.JFrame {
         double valor = cpn.getValor();
         boolean porcentaje = cpn.isEsPorcentaje();
         boolean activo = cpn.isActivo();
+        String fechaActual = cpn.getFechaVencimiento() != null ? cpn.getFechaVencimiento().toString() : "";
+
 
         
         String nuevoCodigo = JOptionPane.showInputDialog(this, "Nuevo código:", codigo);
@@ -151,6 +156,17 @@ public class ConsultaCupon extends javax.swing.JFrame {
         if (nuevoTipo == null) return;
 
         int confirmActivo = JOptionPane.showConfirmDialog(this, "¿El cupón esta activo?", "Activo", JOptionPane.YES_NO_OPTION);
+        
+        String nuevaFechaStr = JOptionPane.showInputDialog(this, "Nueva fecha (yyyy-MM-dd):", fechaActual);
+            if (nuevaFechaStr == null || nuevaFechaStr.trim().isEmpty()) return;
+
+            try {
+                cpn.setFechaVencimiento(LocalDate.parse(nuevaFechaStr.trim()));
+            } catch (DateTimeParseException e) {
+                JOptionPane.showMessageDialog(this, "Formato de fecha inválido. Usa yyyy-MM-dd");
+                return;
+            }
+
 
         // Actualizar el cupón
         cpn.setCodigo(nuevoCodigo.trim());
@@ -158,6 +174,7 @@ public class ConsultaCupon extends javax.swing.JFrame {
         cpn.setValor(nuevoValor);
         cpn.setEsPorcentaje(nuevoTipo.equals("Porcentaje"));
         cpn.setActivo(confirmActivo == JOptionPane.YES_OPTION);
+        cpn.setFechaVencimiento(LocalDate.parse(nuevaFechaStr.trim()));
 
         cargarTabla();
         JOptionPane.showMessageDialog(this, "Cupón actualizado correctamente.");

@@ -109,8 +109,8 @@ public class ReportedeVentas extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnExportActionPerformed
 
-
-
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnExport;

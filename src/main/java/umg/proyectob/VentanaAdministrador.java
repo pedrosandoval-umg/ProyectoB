@@ -1,5 +1,9 @@
-
 package umg.proyectob;
+
+import umg.proyectob.io.LectorCupones;
+import javax.swing.JOptionPane;
+import java.util.List;
+
 
 public class VentanaAdministrador extends javax.swing.JFrame {
 
@@ -29,6 +33,12 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         btnAddUser = new javax.swing.JButton();
         btnAddBook = new javax.swing.JButton();
         btnCupon = new javax.swing.JButton();
+        btnCargarUsuarios = new javax.swing.JButton();
+        btnGuardarUsuarios = new javax.swing.JButton();
+        btnGuardarLibros = new javax.swing.JButton();
+        btnCargarLibros = new javax.swing.JButton();
+        btnCargarCupones = new javax.swing.JButton();
+        btnGuardarCupones = new javax.swing.JButton();
         jMenuBar2 = new javax.swing.JMenuBar();
         menuConsultas = new javax.swing.JMenu();
         optCheckUsers = new javax.swing.JMenuItem();
@@ -68,6 +78,28 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         btnCupon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCuponActionPerformed(evt);
+            }
+        });
+
+        btnCargarUsuarios.setText("Cargar");
+
+        btnGuardarUsuarios.setText("Guardar");
+
+        btnGuardarLibros.setText("Guardar");
+
+        btnCargarLibros.setText("Cargar");
+
+        btnCargarCupones.setText("Cargar");
+        btnCargarCupones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCargarCuponesActionPerformed(evt);
+            }
+        });
+
+        btnGuardarCupones.setText("Guardar");
+        btnGuardarCupones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarCuponesActionPerformed(evt);
             }
         });
 
@@ -119,32 +151,54 @@ public class VentanaAdministrador extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 242, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnClose, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblWelcomeAdmin, javax.swing.GroupLayout.Alignment.TRAILING)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnCupon, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAddUser, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAddBook, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGap(71, 71, 71)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnAddUser)
-                            .addComponent(btnAddBook)
-                            .addComponent(btnCupon))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(btnCargarCupones)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnGuardarCupones))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(btnCargarLibros)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnGuardarLibros))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(btnCargarUsuarios)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnGuardarUsuarios))))
+                .addContainerGap(101, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnClose)
+                    .addComponent(lblWelcomeAdmin))
+                .addGap(29, 29, 29))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(lblWelcomeAdmin)
-                .addGap(18, 18, 18)
-                .addComponent(btnAddUser)
-                .addGap(18, 18, 18)
-                .addComponent(btnAddBook)
-                .addGap(18, 18, 18)
-                .addComponent(btnCupon)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAddUser)
+                    .addComponent(btnCargarUsuarios)
+                    .addComponent(btnGuardarUsuarios))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAddBook)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnCargarLibros)
+                        .addComponent(btnGuardarLibros)))
+                .addGap(54, 54, 54)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCargarCupones)
+                    .addComponent(btnGuardarCupones)
+                    .addComponent(btnCupon))
+                .addGap(42, 42, 42)
                 .addComponent(btnClose)
                 .addContainerGap())
         );
@@ -192,12 +246,33 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         rdv.setVisible(true);
     }//GEN-LAST:event_optCheckReportsActionPerformed
 
+    private void btnCargarCuponesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarCuponesActionPerformed
+        List<Cupon> nuevos = LectorCupones.leerConSelector();
+        Proyectob.cupones.addAll(nuevos);
+        JOptionPane.showMessageDialog(this, "Cupones cargados correctamente.");
+        PuntosExtra.guardarArchivo(Proyectob.cupones, "cupones.dat"); // << Esto asegura persistencia inmediata
+
+    }//GEN-LAST:event_btnCargarCuponesActionPerformed
+
+    private void btnGuardarCuponesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCuponesActionPerformed
+        System.out.println("Guardando " + Proyectob.cupones.size() + " cupones...");
+        LectorCupones.guardarConSelector(Proyectob.cupones);
+        JOptionPane.showMessageDialog(this, "Cupones guardados correctamente.");
+    
+    }//GEN-LAST:event_btnGuardarCuponesActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem OptCheckCupons;
     private javax.swing.JButton btnAddBook;
     private javax.swing.JButton btnAddUser;
+    private javax.swing.JButton btnCargarCupones;
+    private javax.swing.JButton btnCargarLibros;
+    private javax.swing.JButton btnCargarUsuarios;
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnCupon;
+    private javax.swing.JButton btnGuardarCupones;
+    private javax.swing.JButton btnGuardarLibros;
+    private javax.swing.JButton btnGuardarUsuarios;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JLabel lblWelcomeAdmin;

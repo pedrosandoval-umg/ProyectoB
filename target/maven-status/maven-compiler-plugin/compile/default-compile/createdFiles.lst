@@ -9,6 +9,7 @@ umg/proyectob/ReportedeVentas$1.class
 umg/proyectob/PerfilUsuario$2.class
 umg/proyectob/NuevoLibro$2.class
 umg/proyectob/ConsultaCupon$3.class
+umg/proyectob/io/LectorCupones.class
 umg/proyectob/NuevoUsuario$2.class
 umg/proyectob/VentanaAdministrador$5.class
 umg/proyectob/Cupon.class
@@ -17,6 +18,7 @@ umg/proyectob/NuevoCupon.class
 umg/proyectob/VentanaAdministrador$9.class
 umg/proyectob/Usuario.class
 umg/proyectob/Login$2.class
+umg/proyectob/VentanaAdministrador$10.class
 umg/proyectob/RecuperarPassword$2.class
 umg/proyectob/PasswordRequirements.class
 umg/proyectob/VentanaAdministrador$2.class
@@ -34,8 +36,10 @@ umg/proyectob/VentanaVendedor.class
 umg/proyectob/LibroenInventario.class
 umg/proyectob/PerfilUsuario$1.class
 umg/proyectob/ReportedeVentas.class
+umg/proyectob/VentanaAdministrador$11.class
 umg/proyectob/VentanaAdministrador$3.class
 umg/proyectob/RecuperarPassword$1.class
+umg/proyectob/io/LectorLibros.class
 umg/proyectob/CompiladoVenta.class
 umg/proyectob/ConsultaUsuarios$3.class
 umg/proyectob/ConsultaCupon$1.class
@@ -43,6 +47,7 @@ umg/proyectob/NuevoLibro$1.class
 umg/proyectob/ConsultaLibros$1.class
 umg/proyectob/Login.class
 umg/proyectob/PerfilUsuario$3.class
+umg/proyectob/io/LectorUsuarios.class
 umg/proyectob/RecuperarPassword.class
 umg/proyectob/VentanaVendedor$3.class
 umg/proyectob/NuevoCupon$1.class

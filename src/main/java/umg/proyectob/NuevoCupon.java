@@ -195,6 +195,7 @@ public class NuevoCupon extends javax.swing.JFrame {
         cupon.setValor(valor);
         cupon.setEsPorcentaje(tipoDescuento.equals("Porcentaje"));
         cupon.setActivo(activo);
+        cupon.setFechaVencimiento(LocalDate.parse(txtFechaVencimiento.getText()));
 
         Proyectob.cupones.add(cupon);
 
