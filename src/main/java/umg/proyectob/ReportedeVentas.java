@@ -65,6 +65,11 @@ public class ReportedeVentas extends javax.swing.JFrame {
         });
 
         btnExport.setText("Exportar");
+        btnExport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -99,6 +104,10 @@ public class ReportedeVentas extends javax.swing.JFrame {
         this.dispose();
         
     }//GEN-LAST:event_btnCloseActionPerformed
+
+    private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnExportActionPerformed
 
 
 

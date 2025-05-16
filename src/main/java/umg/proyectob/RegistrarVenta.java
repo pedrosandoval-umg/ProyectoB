@@ -2,13 +2,9 @@ package umg.proyectob;
 
 import javax.swing.JOptionPane;
 import java.util.Arrays;
-import java.util.ArrayList;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.time.format.ResolverStyle;
-import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
 
