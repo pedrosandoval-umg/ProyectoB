@@ -1,5 +1,7 @@
 package umg.proyectob;
 import java.io.Serializable;
+import com.google.gson.annotations.SerializedName;
+
 public class LibroenInventario implements Serializable {
     
     private static final long serialVersionUID = 1L;
@@ -8,6 +10,7 @@ public class LibroenInventario implements Serializable {
     private String autor;
     private String genero;
     private double precio;
+    @SerializedName("cantidad")
     private int stock;  
 
     public String getTitulo() {

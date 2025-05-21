@@ -1,4 +1,5 @@
 /home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/io/LectorUsuarios.java
+/home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/ExportadorReportes.java
 /home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/LibroenInventario.java
 /home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/Direcciones.java
 /home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/RegistrarVenta.java
@@ -19,6 +20,7 @@
 /home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/NuevoLibro.java
 /home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/PasswordRequirements.java
 /home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/ConsultaLibros.java
+/home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/ExportadorPDF.java
 /home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/ReportedeVentas.java
 /home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/VentanaAdministrador.java
 /home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/RecuperarPassword.java

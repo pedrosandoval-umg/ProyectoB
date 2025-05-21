@@ -1,6 +1,9 @@
 package umg.proyectob;
 
 import umg.proyectob.io.LectorCupones;
+import umg.proyectob.io.LectorUsuarios;
+import umg.proyectob.io.LectorLibros;
+
 import javax.swing.JOptionPane;
 import java.util.List;
 
@@ -82,12 +85,32 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         });
 
         btnCargarUsuarios.setText("Cargar");
+        btnCargarUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCargarUsuariosActionPerformed(evt);
+            }
+        });
 
         btnGuardarUsuarios.setText("Guardar");
+        btnGuardarUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarUsuariosActionPerformed(evt);
+            }
+        });
 
         btnGuardarLibros.setText("Guardar");
+        btnGuardarLibros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarLibrosActionPerformed(evt);
+            }
+        });
 
         btnCargarLibros.setText("Cargar");
+        btnCargarLibros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCargarLibrosActionPerformed(evt);
+            }
+        });
 
         btnCargarCupones.setText("Cargar");
         btnCargarCupones.addActionListener(new java.awt.event.ActionListener() {
@@ -188,11 +211,11 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                     .addComponent(btnCargarUsuarios)
                     .addComponent(btnGuardarUsuarios))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAddBook)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnCargarLibros)
-                        .addComponent(btnGuardarLibros)))
+                        .addComponent(btnGuardarLibros))
+                    .addComponent(btnAddBook))
                 .addGap(54, 54, 54)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCargarCupones)
@@ -260,6 +283,31 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Cupones guardados correctamente.");
     
     }//GEN-LAST:event_btnGuardarCuponesActionPerformed
+
+    private void btnCargarUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarUsuariosActionPerformed
+        List<Usuario> nuevos = LectorUsuarios.leerConSelector();
+        Proyectob.usuarios.addAll(nuevos); // Agrega los nuevos usuarios a la lista general
+        PuntosExtra.guardarArchivo(Proyectob.usuarios, "usuarios.dat"); // Persistencia en binario
+        JOptionPane.showMessageDialog(this, "Usuarios cargados correctamente.");
+    }//GEN-LAST:event_btnCargarUsuariosActionPerformed
+
+    private void btnGuardarUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarUsuariosActionPerformed
+        System.out.println("Guardando " + Proyectob.usuarios.size() + " usuarios...");
+        LectorUsuarios.guardarConSelector(Proyectob.usuarios); // Guarda como XML editable
+        JOptionPane.showMessageDialog(this, "Usuarios exportados correctamente.");
+    }//GEN-LAST:event_btnGuardarUsuariosActionPerformed
+
+    private void btnCargarLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarLibrosActionPerformed
+        List<LibroenInventario> nuevos = LectorLibros.leerConSelector();
+        Proyectob.libros.addAll(nuevos);
+        PuntosExtra.guardarArchivo(Proyectob.libros, "libros.dat");
+        JOptionPane.showMessageDialog(this, "Libros cargados exitosamente.");
+    }//GEN-LAST:event_btnCargarLibrosActionPerformed
+
+    private void btnGuardarLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarLibrosActionPerformed
+        LectorLibros.guardarConSelector(Proyectob.libros);
+        JOptionPane.showMessageDialog(this, "Usuarios exportados correctamente.");
+    }//GEN-LAST:event_btnGuardarLibrosActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem OptCheckCupons;

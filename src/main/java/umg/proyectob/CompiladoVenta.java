@@ -12,6 +12,7 @@ public class CompiladoVenta implements Serializable {
     private String nombreCliente;
     private String nit;
     private String direccion;
+    private Cupon cupon;
     private double totalSinIva;
     private double total;
     private Usuario vendedor; // ya tienes clase Usuario
@@ -65,5 +66,12 @@ public class CompiladoVenta implements Serializable {
 
     public List<DetalleVenta> getDetalles() {
         return detalles;
+    }
+    public Cupon getCupon() {
+        return cupon;
+    }
+
+    public void setCupon(Cupon cupon) {
+        this.cupon = cupon;
     }
 }

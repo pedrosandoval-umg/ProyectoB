@@ -1,5 +1,7 @@
 package umg.proyectob;
 
+import javax.swing.JOptionPane;
+import umg.proyectob.Cupon;
 import javax.swing.table.DefaultTableModel;
 
 public class ReportedeVentas extends javax.swing.JFrame {
@@ -11,15 +13,18 @@ public class ReportedeVentas extends javax.swing.JFrame {
     }
 
     private void cargarReporte() {
-    String[] columnas = {"Factura", "Cliente", "NIT", "Dirección", "Total sin IVA", "Total", "Vendedor", "Fecha"};
+    String[] columnas = {"Factura", "Cliente", "NIT", "Dirección", "Valor Cupon", "Total sin IVA", "Total", "Vendedor", "Fecha"};
     javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel(columnas, 0);
 
-    for (CompiladoVenta venta : Proyectob.ventas) {
+    for (CompiladoVenta venta : Proyectob.ventas) {         // ✅ Si la venta tiene cupón, obtenemos su valor; si no, usamos 0
+            double valorCupon = (venta.getCupon() != null) ? venta.getCupon().getValor() : 0;
+            
         Object[] fila = {
             venta.getNumeroFactura(),
             venta.getNombreCliente(),
             venta.getNit(),
             venta.getDireccion(),
+            String.format("Q.%.2f", valorCupon),
             String.format("Q%.2f", venta.getTotalSinIva()),
             String.format("Q%.2f", venta.getTotal()),
             venta.getVendedor().getNombre(),
@@ -106,7 +111,41 @@ public class ReportedeVentas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCloseActionPerformed
 
     private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
-        // TODO add your handling code here:
+        // Opciones de formato disponibles
+    String[] formatos = {"CSV", "TXT", "JSON", "XML", "PDF"};
+
+    // Diálogo para que el usuario elija el formato
+    String seleccion = (String) JOptionPane.showInputDialog(
+        this,
+        "Seleccione el formato de exportación:",
+        "Exportar Reporte",
+        JOptionPane.PLAIN_MESSAGE,
+        null,
+        formatos,
+        "CSV" // opción por defecto
+    );
+
+    // Si el usuario seleccionó una opción válida
+    if (seleccion != null) {
+        switch (seleccion) {
+            case "CSV":
+                ExportadorReportes.exportarComoCSV(Proyectob.ventas);
+                break;
+            case "TXT":
+                // Pendiente de implementar
+                ExportadorReportes.exportarComoTXT(Proyectob.ventas);
+                break;
+            case "JSON":
+                ExportadorReportes.exportarComoJSON(Proyectob.ventas);
+                break;
+            case "XML":
+                ExportadorReportes.exportarComoXML(Proyectob.ventas);
+                break;
+            case "PDF":
+                ExportadorPDF.exportarComoPDF(Proyectob.ventas);
+                break;
+                        }
+                }
     }//GEN-LAST:event_btnExportActionPerformed
 
     

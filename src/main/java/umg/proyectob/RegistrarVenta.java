@@ -227,7 +227,7 @@ public class RegistrarVenta extends javax.swing.JFrame {
             fechaVenta,
             detallesActuales
         );
-
+        venta.setCupon(cuponAplicado); // ✅ << aquí se guarda el cupón usado
         // Guardar en lista global
         Proyectob.ventas.add(venta);
         PuntosExtra.guardarArchivo(Proyectob.ventas, "ventas.dat");
