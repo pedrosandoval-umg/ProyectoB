@@ -6,12 +6,19 @@ public class Login extends javax.swing.JFrame {
 
     public Login() {
         initComponents();
-        
-            txtUser.addActionListener(evt -> txtPassword.requestFocus());
-            txtPassword.addActionListener(evt -> btnLogIn.doClick());
+
+        txtUser.addActionListener(evt -> txtPassword.requestFocus());
+        txtPassword.addActionListener(evt -> {
+            if (!btnLogIn.hasFocus()) {
+                btnLogIn.doClick();
+            }
+        });
+
     }
 
-       @SuppressWarnings("unchecked")
+    private boolean yaLogueado = false;
+
+    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -92,37 +99,40 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogInActionPerformed
-        
+        if (yaLogueado) {
+            return; // evitar doble ejecución
+        }
+        yaLogueado = true;
+
         String usuario = txtUser.getText();
         String password = txtPassword.getText();
-        
+
         boolean existe = false;
-        
-        for(Usuario u : Proyectob.usuarios){
-            if(u.getUsuario().equals(usuario) && u.getPassword().equals(password)){
+
+        for (Usuario u : Proyectob.usuarios) {
+            if (u.getUsuario().equals(usuario) && u.getPassword().equals(password)) {
                 existe = true;
-                if(u.getRol() == 1){
-                   VentanaAdministrador v = new VentanaAdministrador(u);
-                   v.setVisible(true);
-                   this.dispose();
-                }
-                else{
-                    VentanaVendedor v = new VentanaVendedor(u);
-                    v.setVisible(true);
+                if (u.getRol() == 1) {
+                    new VentanaAdministrador(u).setVisible(true);
+                    this.dispose();
+                } else {
+                    new VentanaVendedor(u).setVisible(true);
                     this.dispose();
                 }
+                return; // salir al abrir ventana
             }
         }
-        
-        if(existe == false){
+
+        if (!existe) {
             JOptionPane.showMessageDialog(this, "Usuario o password incorrecto");
+            yaLogueado = false; // permitir reintento si falló
         }
     }//GEN-LAST:event_btnLogInActionPerformed
 
     private void btnForgottenPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnForgottenPasswordActionPerformed
         new RecuperarPassword().setVisible(true);
     }//GEN-LAST:event_btnForgottenPasswordActionPerformed
-  
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnForgottenPassword;

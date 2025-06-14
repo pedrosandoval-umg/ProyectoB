@@ -27,8 +27,7 @@ public class PuntosExtra {
     public static <T> void guardarArchivo(List<T> lista, String rutaArchivo) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(rutaArchivo))) {
             oos.writeObject(lista);
-            System.out.println("Guardado exitosamente en: " + rutaArchivo);
-        } catch (IOException e) {
+            } catch (IOException e) {
             System.err.println("Error al guardar en archivo " + rutaArchivo + ": " + e.getMessage());
         }
     }

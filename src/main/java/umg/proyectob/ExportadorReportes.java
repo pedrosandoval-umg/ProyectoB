@@ -222,20 +222,16 @@ public class ExportadorReportes {
     }
 }
     
-    public static class LocalDateAdapter extends TypeAdapter<LocalDate> {         // Adaptador para convertir LocalDate a texto y viceversa
+    public static class LocalDateAdapter extends TypeAdapter<LocalDate> {         // Clase adaptadora que indica cómo Gson debe manejar objetos de tipo LocalDate
 
         @Override
-        public void write(JsonWriter out, LocalDate value) throws IOException {
-            out.value(value.toString()); // Escribe como "2025-05-20"
+        public void write(JsonWriter out, LocalDate value) throws IOException { // Método que define cómo escribir una fecha (LocalDate) en el archivo JSON.
+            out.value(value.toString()); // Convierte el objeto LocalDate en texto con formato ISO (yyyy-MM-dd), que es legible y estándar. Es decir escribe como "2025-05-20"
         }
 
         @Override
-        public LocalDate read(JsonReader in) throws IOException {
-            return LocalDate.parse(in.nextString());
+        public LocalDate read(JsonReader in) throws IOException { // Método que define cómo leer una fecha desde JSON (cuando hagas deserialización, si se implementa).
+            return LocalDate.parse(in.nextString()); // Lee un string como "2025-05-20" y lo convierte en LocalDate
         }
     }
-
-    
-    
-
 }

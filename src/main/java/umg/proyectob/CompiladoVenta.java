@@ -15,7 +15,7 @@ public class CompiladoVenta implements Serializable {
     private Cupon cupon;
     private double totalSinIva;
     private double total;
-    private Usuario vendedor; // ya tienes clase Usuario
+    private Usuario vendedor; 
     private LocalDate fecha;
     private List<DetalleVenta> detalles;
     

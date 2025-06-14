@@ -22,20 +22,20 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="optCheckUsersActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="OptCheckCupons">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Consulta Cupones"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="OptCheckCuponsActionPerformed"/>
-              </Events>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="optCheckBooks">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Consulta Libros"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="optCheckBooksActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="OptCheckCupons">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Consulta Cupones"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="OptCheckCuponsActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -51,6 +51,22 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="optCheckReportsActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="optCheckBooksSold">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Reporte de Libros"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="optCheckBooksSoldActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="optCheckCuponsUsed">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Reporte de Cupones"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="optCheckCuponsUsedActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -130,21 +146,19 @@
                   <Component id="btnCargarUsuarios" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnGuardarUsuarios" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="60" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                      <Component id="btnCargarLibros" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnGuardarLibros" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="btnAddBook" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="btnAddBook" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnCargarLibros" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnGuardarLibros" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="btnCupon" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnCargarCupones" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnGuardarCupones" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnCupon" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+              <EmptySpace pref="50" max="32767" attributes="0"/>
               <Component id="btnClose" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>

@@ -178,6 +178,7 @@ public class ConsultaUsuarios extends javax.swing.JFrame {
         int confirmacion = JOptionPane.showConfirmDialog(null, "¿Deseas eliminar este Usuario?", "Confirmar", JOptionPane.YES_NO_OPTION);
         if (confirmacion == JOptionPane.YES_OPTION) {
             Proyectob.usuarios.remove(filaSeleccionada);
+            PuntosExtra.guardarTodo(); 
             cargarTabla();
             JOptionPane.showMessageDialog(null, "Usuario eliminado correctamente.");
             }

@@ -10,13 +10,13 @@ public class ConsultaLibros extends javax.swing.JFrame {
         initComponents();
         cargarTabla();
     }
-    
+
     private void cargarTabla() {
-        String[] encabezados = {"Titulo","Autor","Genero","Precio", "Stock"};
+        String[] encabezados = {"Titulo", "Autor", "Genero", "Precio", "Stock"};
         DefaultTableModel tblbooks = new DefaultTableModel(encabezados, Proyectob.libros.size());
         tblBooks.setModel(tblbooks);
-        
-        TableModel tabla = tblBooks.getModel();    
+
+        TableModel tabla = tblBooks.getModel();
         for (int i = 0; i < Proyectob.libros.size(); i++) {
             LibroenInventario l = Proyectob.libros.get(i);
             tabla.setValueAt(l.getTitulo(), i, 0);
@@ -120,82 +120,97 @@ public class ConsultaLibros extends javax.swing.JFrame {
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         int editar = tblBooks.getSelectedRow();
         if (editar > -1) {
-        LibroenInventario l = Proyectob.libros.get(editar);
+            LibroenInventario l = Proyectob.libros.get(editar);
 
-        String titulo = l.getTitulo();
-        String autor = l.getAutor();
-        String genero = l.getGenero();
-        double precio = l.getPrecio();
-        int stock = l.getStock();
-        
-        String nuevoTitulo = JOptionPane.showInputDialog(this, "Nuevo titulo:", titulo);
-        if (nuevoTitulo == null || nuevoTitulo.trim().isEmpty()) return;
-        
-            for (int i = 0; i < Proyectob.libros.size(); i++) {
-                if (i != editar && Proyectob.libros.get(i).getTitulo().equalsIgnoreCase(nuevoTitulo.trim())) {
-                    JOptionPane.showMessageDialog(this, "El libro ingresado ya existe.");
+            String titulo = l.getTitulo();
+            String autor = l.getAutor();
+            String genero = l.getGenero();
+            double precio = l.getPrecio();
+            int stock = l.getStock();
+
+            String nuevoTitulo = JOptionPane.showInputDialog(this, "Nuevo titulo:", titulo);
+            if (nuevoTitulo == null || nuevoTitulo.trim().isEmpty()) {
                 return;
             }
-        }
-        
-        String nuevoAutor = JOptionPane.showInputDialog(this, "Nuevo Autor:", autor);
-        if (nuevoAutor == null || nuevoAutor.trim().isEmpty()) return;
-        
-        String nuevoGenero = JOptionPane.showInputDialog(this, "Nuevo Genero:", genero);
-        if (nuevoGenero == null || nuevoGenero.trim().isEmpty()) return;
-        
-        String nuevoPrecioStr = JOptionPane.showInputDialog(this, "Nuevo valor:", String.valueOf(precio));
-        if (nuevoPrecioStr == null) return;
 
-        double nuevoPrecio;
-        try {
-            nuevoPrecio = Double.parseDouble(nuevoPrecioStr.trim());
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Valor inválido.");
-            return;
-        }
-        
-        String nuevoStockStr = JOptionPane.showInputDialog(this, "Nuevo Stock:", String.valueOf(stock));
-        if (nuevoStockStr == null) return;
-        
-        int nuevoStock;
-        try {
-            nuevoStock = Integer.parseInt(nuevoStockStr.trim());
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Valor inválido.");
-            return;
-        }
-        
-        // Actualizar Tabla
-        l.setTitulo(nuevoTitulo.trim());
-        l.setAutor(nuevoAutor.trim());
-        l.setGenero(nuevoGenero.trim());
-        l.setPrecio(nuevoPrecio);
-        l.setStock(nuevoStock);
-       
-        cargarTabla();
-        JOptionPane.showMessageDialog(this, "Libro actualizado correctamente.");
+            nuevoTitulo = nuevoTitulo.trim();
 
-    } else {
-        JOptionPane.showMessageDialog(this, "Seleccione un libro paraa editar");
-    }
-        
+            if (!nuevoTitulo.equalsIgnoreCase(titulo)) {
+                for (LibroenInventario libro : Proyectob.libros) {
+                    if (libro != l && libro.getTitulo().trim().equalsIgnoreCase(nuevoTitulo)) {
+                        JOptionPane.showMessageDialog(this, "Ya existe un libro con ese título.");
+                        return;
+                    }
+                }
+            }
+
+            String nuevoAutor = JOptionPane.showInputDialog(this, "Nuevo Autor:", autor);
+            if (nuevoAutor == null || nuevoAutor.trim().isEmpty()) {
+                return;
+            }
+
+            String nuevoGenero = JOptionPane.showInputDialog(this, "Nuevo Genero:", genero);
+            if (nuevoGenero == null || nuevoGenero.trim().isEmpty()) {
+                return;
+            }
+
+            String nuevoPrecioStr = JOptionPane.showInputDialog(this, "Nuevo valor:", String.valueOf(precio));
+            if (nuevoPrecioStr == null) {
+                return;
+            }
+
+            double nuevoPrecio;
+            try {
+                nuevoPrecio = Double.parseDouble(nuevoPrecioStr.trim());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Valor inválido.");
+                return;
+            }
+
+            String nuevoStockStr = JOptionPane.showInputDialog(this, "Nuevo Stock:", String.valueOf(stock));
+            if (nuevoStockStr == null) {
+                return;
+            }
+
+            int nuevoStock;
+            try {
+                nuevoStock = Integer.parseInt(nuevoStockStr.trim());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Valor inválido.");
+                return;
+            }
+
+            // Actualizar Tabla
+            l.setTitulo(nuevoTitulo.trim());
+            l.setAutor(nuevoAutor.trim());
+            l.setGenero(nuevoGenero.trim());
+            l.setPrecio(nuevoPrecio);
+            l.setStock(nuevoStock);
+
+            PuntosExtra.guardarTodo(); // ✅ guardar los cambios editados
+            cargarTabla();
+            JOptionPane.showMessageDialog(this, "Libro actualizado correctamente.");
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione un libro paraa editar");
+        }
+
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         int filaSeleccionada = tblBooks.getSelectedRow();
         if (filaSeleccionada != -1) {
-        int confirmacion = JOptionPane.showConfirmDialog(null, "¿Deseas eliminar este libro?", "Confirmar", JOptionPane.YES_NO_OPTION);
-        if (confirmacion == JOptionPane.YES_OPTION) {
-            Proyectob.libros.remove(filaSeleccionada);
-            cargarTabla();
-            JOptionPane.showMessageDialog(null, "Libro eliminado correctamente.");
+            int confirmacion = JOptionPane.showConfirmDialog(null, "¿Deseas eliminar este libro?", "Confirmar", JOptionPane.YES_NO_OPTION);
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                Proyectob.libros.remove(filaSeleccionada);
+                PuntosExtra.guardarTodo();
+                cargarTabla();
+                JOptionPane.showMessageDialog(null, "Libro eliminado correctamente.");
             }
         } else {
             JOptionPane.showMessageDialog(null, "Por favor selecciona un libro para eliminar.");
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

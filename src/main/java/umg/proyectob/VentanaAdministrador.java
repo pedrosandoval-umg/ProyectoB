@@ -45,10 +45,12 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         jMenuBar2 = new javax.swing.JMenuBar();
         menuConsultas = new javax.swing.JMenu();
         optCheckUsers = new javax.swing.JMenuItem();
-        OptCheckCupons = new javax.swing.JMenuItem();
         optCheckBooks = new javax.swing.JMenuItem();
+        OptCheckCupons = new javax.swing.JMenuItem();
         menuReporte = new javax.swing.JMenu();
         optCheckReports = new javax.swing.JMenuItem();
+        optCheckBooksSold = new javax.swing.JMenuItem();
+        optCheckCuponsUsed = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -136,14 +138,6 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         });
         menuConsultas.add(optCheckUsers);
 
-        OptCheckCupons.setText("Consulta Cupones");
-        OptCheckCupons.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                OptCheckCuponsActionPerformed(evt);
-            }
-        });
-        menuConsultas.add(OptCheckCupons);
-
         optCheckBooks.setText("Consulta Libros");
         optCheckBooks.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -151,6 +145,14 @@ public class VentanaAdministrador extends javax.swing.JFrame {
             }
         });
         menuConsultas.add(optCheckBooks);
+
+        OptCheckCupons.setText("Consulta Cupones");
+        OptCheckCupons.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OptCheckCuponsActionPerformed(evt);
+            }
+        });
+        menuConsultas.add(OptCheckCupons);
 
         jMenuBar2.add(menuConsultas);
 
@@ -163,6 +165,22 @@ public class VentanaAdministrador extends javax.swing.JFrame {
             }
         });
         menuReporte.add(optCheckReports);
+
+        optCheckBooksSold.setText("Reporte de Libros");
+        optCheckBooksSold.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                optCheckBooksSoldActionPerformed(evt);
+            }
+        });
+        menuReporte.add(optCheckBooksSold);
+
+        optCheckCuponsUsed.setText("Reporte de Cupones");
+        optCheckCuponsUsed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                optCheckCuponsUsedActionPerformed(evt);
+            }
+        });
+        menuReporte.add(optCheckCuponsUsed);
 
         jMenuBar2.add(menuReporte);
 
@@ -210,18 +228,17 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                     .addComponent(btnAddUser)
                     .addComponent(btnCargarUsuarios)
                     .addComponent(btnGuardarUsuarios))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnCargarLibros)
-                        .addComponent(btnGuardarLibros))
-                    .addComponent(btnAddBook))
+                .addGap(52, 52, 52)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAddBook)
+                    .addComponent(btnCargarLibros)
+                    .addComponent(btnGuardarLibros))
                 .addGap(54, 54, 54)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCupon)
                     .addComponent(btnCargarCupones)
-                    .addComponent(btnGuardarCupones)
-                    .addComponent(btnCupon))
-                .addGap(42, 42, 42)
+                    .addComponent(btnGuardarCupones))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addComponent(btnClose)
                 .addContainerGap())
         );
@@ -265,6 +282,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
     }//GEN-LAST:event_OptCheckCuponsActionPerformed
 
     private void optCheckReportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optCheckReportsActionPerformed
+        // TODO add your handling code here:
         ReportedeVentas rdv = new ReportedeVentas();
         rdv.setVisible(true);
     }//GEN-LAST:event_optCheckReportsActionPerformed
@@ -305,9 +323,22 @@ public class VentanaAdministrador extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCargarLibrosActionPerformed
 
     private void btnGuardarLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarLibrosActionPerformed
+        // TODO add your handling code here:
         LectorLibros.guardarConSelector(Proyectob.libros);
         JOptionPane.showMessageDialog(this, "Usuarios exportados correctamente.");
     }//GEN-LAST:event_btnGuardarLibrosActionPerformed
+
+    private void optCheckCuponsUsedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optCheckCuponsUsedActionPerformed
+        // TODO add your handling code here:
+        ReportedeCupones rdc = new ReportedeCupones();
+        rdc.setVisible(true);
+    }//GEN-LAST:event_optCheckCuponsUsedActionPerformed
+
+    private void optCheckBooksSoldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optCheckBooksSoldActionPerformed
+        // TODO add your handling code here:
+        ReportedeLibros rdl = new ReportedeLibros();
+        rdl.setVisible(true);
+    }//GEN-LAST:event_optCheckBooksSoldActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem OptCheckCupons;
@@ -327,6 +358,8 @@ public class VentanaAdministrador extends javax.swing.JFrame {
     private javax.swing.JMenu menuConsultas;
     private javax.swing.JMenu menuReporte;
     private javax.swing.JMenuItem optCheckBooks;
+    private javax.swing.JMenuItem optCheckBooksSold;
+    private javax.swing.JMenuItem optCheckCuponsUsed;
     private javax.swing.JMenuItem optCheckReports;
     private javax.swing.JMenuItem optCheckUsers;
     // End of variables declaration//GEN-END:variables

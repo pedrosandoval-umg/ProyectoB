@@ -191,6 +191,7 @@ public class ConsultaCupon extends javax.swing.JFrame {
         int confirmacion = JOptionPane.showConfirmDialog(null, "¿Deseas eliminar este cupón?", "Confirmar", JOptionPane.YES_NO_OPTION);
         if (confirmacion == JOptionPane.YES_OPTION) {
             Proyectob.cupones.remove(filaSeleccionada);
+            PuntosExtra.guardarTodo();
             cargarTabla();
             JOptionPane.showMessageDialog(null, "Cupón eliminado correctamente.");
         }
