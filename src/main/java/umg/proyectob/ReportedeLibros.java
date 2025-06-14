@@ -1,26 +1,58 @@
 package umg.proyectob;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import javax.swing.table.DefaultTableModel;
 import umg.proyectob.CompiladoVenta;
 import umg.proyectob.DetalleVenta;
 import umg.proyectob.LibroenInventario;
 import java.util.List;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import umg.proyectob.Proyectob;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
+import umg.proyectob.DetalleVenta;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import umg.proyectob.DetalleVenta;
+import umg.proyectob.ExportadorReportes;
 
-/**
- *
- * @author pedros
- */
+
+
+
+
 public class ReportedeLibros extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ReportedeLibros
-     */
     public ReportedeLibros() {
         initComponents();
         cargarReporteLibros();
+    }
+
+    private List<DetalleVenta> obtenerLibrosVendidos() {
+        List<DetalleVenta> lista = new ArrayList<>();
+        for (CompiladoVenta venta : Proyectob.ventas) {
+            lista.addAll(venta.getDetalles());
+        }
+        return lista;
     }
 
     private void cargarReporteLibros() {
@@ -59,6 +91,7 @@ public class ReportedeLibros extends javax.swing.JFrame {
         btnExport = new javax.swing.JButton();
         btnClose = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
+        btnImport = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -96,6 +129,8 @@ public class ReportedeLibros extends javax.swing.JFrame {
             }
         });
 
+        btnImport.setText("Importar");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -105,8 +140,10 @@ public class ReportedeLibros extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 732, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnImport)
+                        .addGap(18, 18, 18)
                         .addComponent(btnExport)
-                        .addGap(251, 251, 251)
+                        .addGap(174, 174, 174)
                         .addComponent(btnDelete)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnClose)))
@@ -121,12 +158,15 @@ public class ReportedeLibros extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnExport)
                     .addComponent(btnClose)
-                    .addComponent(btnDelete))
+                    .addComponent(btnDelete)
+                    .addComponent(btnImport))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+ 
 
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
         this.dispose();
@@ -149,19 +189,20 @@ public class ReportedeLibros extends javax.swing.JFrame {
         );
 
         // Si el usuario seleccionó una opción válida
-        if (seleccion != null) {
-            switch (seleccion) {
-                case "CSV":
-                    ExportadorReportes.exportarComoCSV(Proyectob.ventas);
-                    break;
-                case "JSON":
-                    ExportadorReportes.exportarComoJSON(Proyectob.ventas);
-                    break;
-                case "XML":
-                    ExportadorReportes.exportarComoXML(Proyectob.ventas);
-                    break;
-            }
+        List<DetalleVenta> libros = obtenerLibrosVendidos();
+
+        switch (seleccion) {
+            case "CSV":
+                ExportadorReportes.exportarLibrosVendidosComoCSV(libros);
+                break;
+            case "JSON":
+                ExportadorReportes.exportarLibrosVendidosComoJSON(libros);
+                break;
+            case "XML":
+                ExportadorReportes.exportarLibrosVendidosComoXML(libros);
+                break;
         }
+
     }//GEN-LAST:event_btnExportActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -214,6 +255,7 @@ public class ReportedeLibros extends javax.swing.JFrame {
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnExport;
+    private javax.swing.JButton btnImport;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblReporteLibros;
     // End of variables declaration//GEN-END:variables

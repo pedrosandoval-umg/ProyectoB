@@ -1,42 +1,56 @@
 package umg.proyectob;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import umg.proyectob.Proyectob;
 
-/**
- *
- * @author pedros
- */
 public class ReportedeCupones extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ReportedeCupones
-     */
     public ReportedeCupones() {
         initComponents();
         cargarReporteCupones();
     }
 
     private void cargarReporteCupones() {
-    String[] columnas = {"Fecha", "Cupón", "Tipo de Cupón", "Valor del Cupón", "Vendedor"};
-    javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel(columnas, 0);
+        String[] columnas = {"Fecha", "Cupón", "Tipo de Cupón", "Valor del Cupón", "Vendedor"};
+        javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel(columnas, 0);
 
-    for (CompiladoVenta venta : Proyectob.ventas) {
-        if (venta.getCupon() != null) {
-            String fecha = venta.getFecha().toString();
-            String codigo = venta.getCupon().getCodigo();
-            String tipo = venta.getCupon().isEsPorcentaje() ? "Porcentaje" : "Monto fijo";
-            double valor = venta.getCupon().getValor();
-            String vendedor = venta.getVendedor().getNombre();
+        for (CompiladoVenta venta : Proyectob.ventas) {
+            if (venta.getCupon() != null) {
+                String fecha = venta.getFecha().toString();
+                String codigo = venta.getCupon().getCodigo();
+                String tipo = venta.getCupon().isEsPorcentaje() ? "Porcentaje" : "Monto fijo";
+                double valor = venta.getCupon().getValor();
+                String vendedor = venta.getVendedor().getNombre();
 
-            Object[] fila = {fecha, codigo, tipo, valor, vendedor};
-            modelo.addRow(fila);
+                Object[] fila = {fecha, codigo, tipo, valor, vendedor};
+                modelo.addRow(fila);
+            }
         }
-    } 
 
-    tblReporteCupones.setModel(modelo);
-}
+        tblReporteCupones.setModel(modelo);
+    }
 
+    private List<CuponUsado> obtenerCuponesUsados() {
+        List<CuponUsado> lista = new ArrayList<>();
+
+        for (CompiladoVenta venta : Proyectob.ventas) {
+            if (venta.getCupon() != null) {
+                String tipo = venta.getCupon().isEsPorcentaje() ? "Porcentaje" : "Monto fijo";
+                CuponUsado usado = new CuponUsado(
+                        venta.getFecha(),
+                        venta.getCupon().getCodigo(),
+                        tipo,
+                        venta.getCupon().getValor(),
+                        venta.getVendedor().getNombre()
+                );
+                lista.add(usado);
+            }
+        }
+
+        return lista;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -51,6 +65,7 @@ public class ReportedeCupones extends javax.swing.JFrame {
         tblReporteCupones = new javax.swing.JTable();
         btnExport = new javax.swing.JButton();
         btnClose = new javax.swing.JButton();
+        btnImport = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -81,6 +96,13 @@ public class ReportedeCupones extends javax.swing.JFrame {
             }
         });
 
+        btnImport.setText("Importar");
+        btnImport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImportActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -90,6 +112,8 @@ public class ReportedeCupones extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 729, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnImport)
+                        .addGap(18, 18, 18)
                         .addComponent(btnExport)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnClose)))
@@ -103,7 +127,8 @@ public class ReportedeCupones extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnExport)
-                    .addComponent(btnClose))
+                    .addComponent(btnClose)
+                    .addComponent(btnImport))
                 .addContainerGap())
         );
 
@@ -117,39 +142,45 @@ public class ReportedeCupones extends javax.swing.JFrame {
     private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
         // TODO add your handling code here:
         // Opciones de formato disponibles
-    String[] formatos = {"CSV", "JSON", "XML"};
+        String[] formatos = {"CSV", "JSON", "XML"};
 
-    // Diálogo para que el usuario elija el formato
-    String seleccion = (String) JOptionPane.showInputDialog(
-        this,
-        "Seleccione el formato de exportación:",
-        "Exportar Reporte",
-        JOptionPane.PLAIN_MESSAGE,
-        null,
-        formatos,
-        "CSV" // opción por defecto
-    );
+        // Diálogo para que el usuario elija el formato
+        String seleccion = (String) JOptionPane.showInputDialog(
+                this,
+                "Seleccione el formato de exportación:",
+                "Exportar Reporte",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                formatos,
+                "CSV" // opción por defecto
+        );
 
-    // Si el usuario seleccionó una opción válida
-    if (seleccion != null) {
+        // Si el usuario seleccionó una opción válida
+        List<CuponUsado> cupones = obtenerCuponesUsados();
+
         switch (seleccion) {
             case "CSV":
-                ExportadorReportes.exportarComoCSV(Proyectob.ventas);
+                ExportadorReportes.exportarCuponesUsadosComoCSV(cupones);
                 break;
             case "JSON":
-                ExportadorReportes.exportarComoJSON(Proyectob.ventas);
+                ExportadorReportes.exportarCuponesUsadosComoJSON(cupones);
                 break;
             case "XML":
-                ExportadorReportes.exportarComoXML(Proyectob.ventas);
+                ExportadorReportes.exportarCuponesUsadosComoXML(cupones);
                 break;
-                    }
-                }
+        }
+
     }//GEN-LAST:event_btnExportActionPerformed
+
+    private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnImportActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnExport;
+    private javax.swing.JButton btnImport;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblReporteCupones;
     // End of variables declaration//GEN-END:variables

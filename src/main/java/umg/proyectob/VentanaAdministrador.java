@@ -7,22 +7,22 @@ import umg.proyectob.io.LectorLibros;
 import javax.swing.JOptionPane;
 import java.util.List;
 
-
 public class VentanaAdministrador extends javax.swing.JFrame {
 
     private Usuario usuarioActual;
-        public VentanaAdministrador(Usuario usuario) {
-            initComponents();
-            this.usuarioActual = usuario;
-            lblWelcomeAdmin.setText("Bienvenido " + usuarioActual.getNombre()); 
-            
-            this.addWindowListener(new java.awt.event.WindowAdapter() {
-                @Override
-                public void windowClosing(java.awt.event.WindowEvent e) {
+
+    public VentanaAdministrador(Usuario usuario) {
+        initComponents();
+        this.usuarioActual = usuario;
+        lblWelcomeAdmin.setText("Bienvenido " + usuarioActual.getNombre());
+
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
                 PuntosExtra.guardarTodo();
                 System.out.println("Datos guardados correctamente al salir.");
-    }
-});
+            }
+        });
 
     }
 
@@ -263,7 +263,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
 
     private void btnAddBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddBookActionPerformed
         NuevoLibro l = new NuevoLibro();
-        l.setVisible(true); 
+        l.setVisible(true);
     }//GEN-LAST:event_btnAddBookActionPerformed
 
     private void optCheckBooksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optCheckBooksActionPerformed
@@ -289,43 +289,66 @@ public class VentanaAdministrador extends javax.swing.JFrame {
 
     private void btnCargarCuponesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarCuponesActionPerformed
         List<Cupon> nuevos = LectorCupones.leerConSelector();
+        if (nuevos == null || nuevos.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Carga cancelada o archivo vacío.");
+            return;
+        }
         Proyectob.cupones.addAll(nuevos);
+        PuntosExtra.guardarArchivo(Proyectob.cupones, "cupones.dat");
         JOptionPane.showMessageDialog(this, "Cupones cargados correctamente.");
-        PuntosExtra.guardarArchivo(Proyectob.cupones, "cupones.dat"); // << Esto asegura persistencia inmediata
-
     }//GEN-LAST:event_btnCargarCuponesActionPerformed
 
     private void btnGuardarCuponesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCuponesActionPerformed
-        System.out.println("Guardando " + Proyectob.cupones.size() + " cupones...");
-        LectorCupones.guardarConSelector(Proyectob.cupones);
-        JOptionPane.showMessageDialog(this, "Cupones guardados correctamente.");
-    
+        boolean exito = LectorCupones.guardarConSelector(Proyectob.cupones);
+        if (exito) {
+            JOptionPane.showMessageDialog(this, "Cupones guardados correctamente.");
+        } else {
+            JOptionPane.showMessageDialog(this, "No se guardaron los cupones.");
+        }
+
     }//GEN-LAST:event_btnGuardarCuponesActionPerformed
 
     private void btnCargarUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarUsuariosActionPerformed
         List<Usuario> nuevos = LectorUsuarios.leerConSelector();
-        Proyectob.usuarios.addAll(nuevos); // Agrega los nuevos usuarios a la lista general
-        PuntosExtra.guardarArchivo(Proyectob.usuarios, "usuarios.dat"); // Persistencia en binario
+
+        if (nuevos == null || nuevos.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Carga cancelada o archivo vacío.");
+            return;
+        }
+
+        Proyectob.usuarios.addAll(nuevos);
+        PuntosExtra.guardarArchivo(Proyectob.usuarios, "usuarios.dat");
         JOptionPane.showMessageDialog(this, "Usuarios cargados correctamente.");
     }//GEN-LAST:event_btnCargarUsuariosActionPerformed
 
     private void btnGuardarUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarUsuariosActionPerformed
-        System.out.println("Guardando " + Proyectob.usuarios.size() + " usuarios...");
-        LectorUsuarios.guardarConSelector(Proyectob.usuarios); // Guarda como XML editable
-        JOptionPane.showMessageDialog(this, "Usuarios exportados correctamente.");
+        boolean exito = LectorUsuarios.guardarConSelector(Proyectob.usuarios);
+        if (exito) {
+            JOptionPane.showMessageDialog(this, "Usuarios guardados correctamente.");
+        } else {
+            JOptionPane.showMessageDialog(this, "No se guardaron los usuarios.");
+        }
     }//GEN-LAST:event_btnGuardarUsuariosActionPerformed
 
     private void btnCargarLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarLibrosActionPerformed
         List<LibroenInventario> nuevos = LectorLibros.leerConSelector();
+        if (nuevos == null || nuevos.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Carga cancelada o archivo vacío.");
+            return;
+        }
         Proyectob.libros.addAll(nuevos);
         PuntosExtra.guardarArchivo(Proyectob.libros, "libros.dat");
         JOptionPane.showMessageDialog(this, "Libros cargados exitosamente.");
+
     }//GEN-LAST:event_btnCargarLibrosActionPerformed
 
     private void btnGuardarLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarLibrosActionPerformed
-        // TODO add your handling code here:
-        LectorLibros.guardarConSelector(Proyectob.libros);
-        JOptionPane.showMessageDialog(this, "Usuarios exportados correctamente.");
+        boolean exito = LectorLibros.guardarConSelector(Proyectob.libros);
+        if (exito) {
+            JOptionPane.showMessageDialog(this, "Libros guardados correctamente.");
+        } else {
+            JOptionPane.showMessageDialog(this, "No se guardaron los libros.");
+        }
     }//GEN-LAST:event_btnGuardarLibrosActionPerformed
 
     private void optCheckCuponsUsedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optCheckCuponsUsedActionPerformed

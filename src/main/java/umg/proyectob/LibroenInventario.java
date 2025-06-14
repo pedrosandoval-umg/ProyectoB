@@ -44,4 +44,8 @@ public class LibroenInventario implements Serializable {
     public void setStock(int stock) {
         this.stock = stock;
     }
+
+    public void setCantidad(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }    

@@ -3,6 +3,8 @@ package umg.proyectob.io;
 import umg.proyectob.Usuario;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFileChooser;
@@ -20,7 +22,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
 
 public class LectorUsuarios {
 
@@ -136,22 +137,24 @@ public class LectorUsuarios {
         }
     }
 
-    public static void guardarConSelector(List<Usuario> usuarios) {
-        // Abre un JFileChooser para seleccionar dónde guardar el XML
+    public static boolean guardarConSelector(List<Usuario> usuarios) {
         JFileChooser selector = new JFileChooser();
-        selector.setDialogTitle("Guardar usuarios como XML");
+        selector.setDialogTitle("Guardar archivo XML de usuarios");
 
         int resultado = selector.showSaveDialog(null);
         if (resultado == JFileChooser.APPROVE_OPTION) {
-            String ruta = selector.getSelectedFile().getAbsolutePath();
+            File archivo = selector.getSelectedFile();
 
-            // Asegura extensión .xml
-            if (!ruta.endsWith(".xml")) {
-                ruta += ".xml";
+            // Si el usuario no escribe ".xml", se lo agregamos
+            String ruta = archivo.getAbsolutePath();
+            if (!ruta.toLowerCase().endsWith(".xml")) {
+                archivo = new File(ruta + ".xml");
             }
 
-            // Llama al método para generar y guardar el XML
-            guardarComoXML(usuarios, ruta);
+            guardarComoXML(usuarios, archivo.getAbsolutePath());
+            return true;
         }
+        return false;
     }
+
 }

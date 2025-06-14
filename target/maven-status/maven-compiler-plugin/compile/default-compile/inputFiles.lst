@@ -3,6 +3,7 @@
 /home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/LibroenInventario.java
 /home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/Direcciones.java
 /home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/RegistrarVenta.java
+/home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/CuponUsado.java
 /home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/Login.java
 /home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/io/LectorLibros.java
 /home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/Usuario.java
@@ -10,6 +11,7 @@
 /home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/PuntosExtra.java
 /home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/Cupon.java
 /home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/ConsultaCupon.java
+/home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/io/LectorReportesVentas.java
 /home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/PerfilUsuario.java
 /home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/NuevoUsuario.java
 /home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/NuevoCupon.java
@@ -17,6 +19,7 @@
 /home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/DetalleVenta.java
 /home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/VentanaVendedor.java
 /home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/io/LectorCupones.java
+/home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/io/LectorReporteCupones.java
 /home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/NuevoLibro.java
 /home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/PasswordRequirements.java
 /home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/ConsultaLibros.java
@@ -24,6 +27,7 @@
 /home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/ReportedeVentas.java
 /home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/VentanaAdministrador.java
 /home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/RecuperarPassword.java
+/home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/io/LectorReportesLibros.java
 /home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/ReportedeLibros.java
 /home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/CompiladoVenta.java
 /home/pedros/NetBeansProjects/Proyectob/src/main/java/umg/proyectob/ReportedeCupones.java

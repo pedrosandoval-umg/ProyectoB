@@ -1,5 +1,6 @@
 umg/proyectob/RegistrarVenta$1.class
 umg/proyectob/ConsultaLibros$3.class
+umg/proyectob/io/LectorReportesLibros$1.class
 umg/proyectob/PerfilUsuario.class
 umg/proyectob/VentanaAdministrador$8.class
 umg/proyectob/PuntosExtra.class
@@ -8,11 +9,13 @@ umg/proyectob/Login$1.class
 umg/proyectob/VentanaAdministrador$13.class
 umg/proyectob/ReportedeLibros$3.class
 umg/proyectob/ReportedeVentas$1.class
+umg/proyectob/io/LectorReporteCupones.class
 umg/proyectob/PerfilUsuario$2.class
 umg/proyectob/NuevoLibro$2.class
 umg/proyectob/io/LectorLibros$1.class
 umg/proyectob/ConsultaCupon$3.class
 umg/proyectob/VentanaAdministrador$12.class
+umg/proyectob/CuponUsado.class
 umg/proyectob/ReportedeCupones.class
 umg/proyectob/io/LectorCupones.class
 umg/proyectob/NuevoUsuario$2.class
@@ -36,17 +39,20 @@ umg/proyectob/VentanaAdministrador.class
 umg/proyectob/VentanaVendedor$4.class
 umg/proyectob/RegistrarVenta$4.class
 umg/proyectob/NuevoUsuario.class
+umg/proyectob/io/LectorReportesVentas.class
 umg/proyectob/ConsultaUsuarios$1.class
 umg/proyectob/VentanaAdministrador$6.class
 umg/proyectob/Proyectob.class
 umg/proyectob/VentanaVendedor.class
 umg/proyectob/LibroenInventario.class
+umg/proyectob/io/LectorReportesLibros.class
 umg/proyectob/ReportedeLibros.class
 umg/proyectob/VentanaAdministrador$16.class
 umg/proyectob/PerfilUsuario$1.class
 umg/proyectob/ReportedeVentas.class
 umg/proyectob/VentanaAdministrador$11.class
 umg/proyectob/VentanaAdministrador$3.class
+umg/proyectob/io/LectorReportesVentas$1.class
 umg/proyectob/RecuperarPassword$1.class
 umg/proyectob/io/LectorLibros.class
 umg/proyectob/CompiladoVenta.class
@@ -74,6 +80,7 @@ umg/proyectob/VentanaAdministrador$17.class
 umg/proyectob/RegistrarVenta$2.class
 umg/proyectob/Direcciones.class
 umg/proyectob/VentanaAdministrador$7.class
+umg/proyectob/io/LectorReporteCupones$1.class
 umg/proyectob/ExportadorReportes$LocalDateAdapter.class
 umg/proyectob/VentanaAdministrador$14.class
 umg/proyectob/NuevoCupon$3.class
@@ -83,4 +90,5 @@ umg/proyectob/ConsultaLibros$2.class
 umg/proyectob/DetalleVenta.class
 umg/proyectob/VentanaVendedor$2.class
 umg/proyectob/ConsultaCupon.class
+umg/proyectob/ReportedeCupones$3.class
 umg/proyectob/ReportedeLibros$1.class

@@ -8,7 +8,6 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.ArrayList;
 
-
 public class RegistrarVenta extends javax.swing.JFrame {
 
     private List<DetalleVenta> carrito = new ArrayList<>();
@@ -17,152 +16,166 @@ public class RegistrarVenta extends javax.swing.JFrame {
 
     public RegistrarVenta(Usuario usuario) {
         initComponents();
-        
+
         this.usuarioActual = usuario;
         lblNombreUsuario.setText("Vendedor: " + usuarioActual.getNombre());
         this.numeroFacturaGenerado = generarIDFactura();
-            lblID_Factura.setText("ID Factura: " + numeroFacturaGenerado);
-    
+        lblID_Factura.setText("ID Factura: " + numeroFacturaGenerado);
+
         ComboBoxLibros.removeAllItems();
         for (LibroenInventario libro : Proyectob.libros) {
-        ComboBoxLibros.addItem(libro.getTitulo());
-}
+            ComboBoxLibros.addItem(libro.getTitulo());
+        }
         ComboBoxLibros.addActionListener(e -> actualizarPrecioUnitario());
         txtMonto.addActionListener(e -> actualizarTotal());
-        
+
         ComboCupones.removeAllItems();
-        System.out.println("Cupones cargados: " + Proyectob.cupones.size());      
+        System.out.println("Cupones cargados: " + Proyectob.cupones.size());
         for (Cupon c : Proyectob.cupones) {
             if (c.isActivo() && (c.getFechaVencimiento() == null || !c.getFechaVencimiento().isBefore(LocalDate.now()))) {
-            ComboCupones.addItem(c.getCodigo());
-                }
+                ComboCupones.addItem(c.getCodigo());
             }
-    }    
+        }
+    }
+
     private LocalDate validarFechaIngresada(String textoFecha) {
         List<DateTimeFormatter> formatos = Arrays.asList(
-        DateTimeFormatter.ofPattern("yyyy-MM-dd"),
-        DateTimeFormatter.ofPattern("dd/MM/yyyy"),
-        DateTimeFormatter.ofPattern("dd-MM-yyyy"),
-        DateTimeFormatter.ofPattern("yy/MM/dd")  // opcional
-    );
+                DateTimeFormatter.ofPattern("yyyy-MM-dd"),
+                DateTimeFormatter.ofPattern("dd/MM/yyyy"),
+                DateTimeFormatter.ofPattern("dd-MM-yyyy"),
+                DateTimeFormatter.ofPattern("yy/MM/dd") // opcional
+        );
 
-    for (DateTimeFormatter formatter : formatos) {
-        try {
-            return LocalDate.parse(textoFecha, formatter);
-        } catch (DateTimeParseException e) {
-            // Probar con el siguiente formato
+        for (DateTimeFormatter formatter : formatos) {
+            try {
+                return LocalDate.parse(textoFecha, formatter);
+            } catch (DateTimeParseException e) {
+                // Probar con el siguiente formato
+            }
         }
+
+        JOptionPane.showMessageDialog(this,
+                "Formato de fecha inválido. Usa por ejemplo: 2025-05-03, 03/05/2025, o 24/12/31");
+        return null;
     }
 
-    JOptionPane.showMessageDialog(this,
-        "Formato de fecha inválido. Usa por ejemplo: 2025-05-03, 03/05/2025, o 24/12/31");
-    return null;
-    }
     private String generarIDFactura() {
-    java.time.LocalDateTime ahora = java.time.LocalDateTime.now();
-    java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("ddMMyyHHmmss");
-    return ahora.format(formatter);
-}
+        java.time.LocalDateTime ahora = java.time.LocalDateTime.now();
+        java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("ddMMyyHHmmss");
+        return ahora.format(formatter);
+    }
+
     private void TotalSinIva() {
-    double total = 0;
-    for (DetalleVenta d : carrito) {
-        total += d.getSubtotal();
-    }
-
-    double sinIVA = total / 1.12;
-    sinIVA = Math.round(sinIVA * 100.0) / 100.0; // Redondeo a 2 decimales
-
-    lblSinIVA.setText("Total sin IVA: Q" + String.format("%.2f", sinIVA));
-
-}
-    private void actualizarPrecioUnitario() {
-    String tituloSeleccionado = (String) ComboBoxLibros.getSelectedItem();
-    if (tituloSeleccionado == null) return;
-
-    for (LibroenInventario libro : Proyectob.libros) {
-        if (libro.getTitulo().equals(tituloSeleccionado)) {
-            lblPriceperUnit.setText("Precio Unitario: Q" + libro.getPrecio());
-            break;
+        double total = 0;
+        for (DetalleVenta d : carrito) {
+            total += d.getSubtotal();
         }
+
+        double sinIVA = total / 1.12;
+        sinIVA = Math.round(sinIVA * 100.0) / 100.0; // Redondeo a 2 decimales
+
+        lblSinIVA.setText("Total sin IVA: Q" + String.format("%.2f", sinIVA));
+
     }
-}
-    private void actualizarTotal() {
-    String tituloSeleccionado = (String) ComboBoxLibros.getSelectedItem();
-    if (tituloSeleccionado == null) return;
 
-      String cantidadTexto = txtMonto.getText().trim();
-    if (cantidadTexto.isEmpty()) return;
-
-    try {
-        int cantidad = Integer.parseInt(cantidadTexto);
+    private void actualizarPrecioUnitario() {
+        String tituloSeleccionado = (String) ComboBoxLibros.getSelectedItem();
+        if (tituloSeleccionado == null) {
+            return;
+        }
 
         for (LibroenInventario libro : Proyectob.libros) {
             if (libro.getTitulo().equals(tituloSeleccionado)) {
-                double total = libro.getPrecio() * cantidad;
-                lblTotalIndividual.setText("Total a Pagar: Q" + total);
+                lblPriceperUnit.setText("Precio Unitario: Q" + libro.getPrecio());
                 break;
             }
         }
-    } catch (NumberFormatException e) {
-        lblTotalIndividual.setText("Cantidad inválida");
-    }
-}
-    
-    private void agregarAlCarrito() {
-            // Validar fecha
-    String fechaTexto = txtDate.getText().trim();
-    LocalDate fechaVenta = validarFechaIngresada(fechaTexto);
-    if (fechaVenta == null) return;
-    
-    String tituloSeleccionado = (String) ComboBoxLibros.getSelectedItem();
-    if (tituloSeleccionado == null) {
-        JOptionPane.showMessageDialog(this, "Seleccione un libro.");
-        return;
     }
 
-    String cantidadTexto = txtMonto.getText().trim();
-    if (cantidadTexto.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Ingrese la cantidad.");
-        return;
-    }
-
-    String nitCliente = txtID_NIT.getText().trim();
-    String nombreCliente = txtNombre_Cliente.getText().trim();
-    String direccionCliente = txtAddress.getText().trim();
-
-    if (nitCliente.isEmpty() || nombreCliente.isEmpty() || direccionCliente.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Complete los datos del cliente (NIT, Nombre, Direccion).");
-        return;
-    }
-    int cantidad;
-    try {
-        cantidad = Integer.parseInt(cantidadTexto);
-        if (cantidad <= 0) {
-            JOptionPane.showMessageDialog(this, "La cantidad debe ser mayor a 0.");
+    private void actualizarTotal() {
+        String tituloSeleccionado = (String) ComboBoxLibros.getSelectedItem();
+        if (tituloSeleccionado == null) {
             return;
         }
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Cantidad inválida.");
-        return;
+
+        String cantidadTexto = txtMonto.getText().trim();
+        if (cantidadTexto.isEmpty()) {
+            return;
+        }
+
+        try {
+            int cantidad = Integer.parseInt(cantidadTexto);
+
+            for (LibroenInventario libro : Proyectob.libros) {
+                if (libro.getTitulo().equals(tituloSeleccionado)) {
+                    double total = libro.getPrecio() * cantidad;
+                    lblTotalIndividual.setText("Total a Pagar: Q" + total);
+                    break;
+                }
+            }
+        } catch (NumberFormatException e) {
+            lblTotalIndividual.setText("Cantidad inválida");
+        }
     }
 
-    for (LibroenInventario libro : Proyectob.libros) {
-        if (libro.getTitulo().equals(tituloSeleccionado)) {
-            if (libro.getStock() < cantidad) {
-                JOptionPane.showMessageDialog(this, "Stock insuficiente.");
+    private void agregarAlCarrito() {
+        // Validar fecha
+        String fechaTexto = txtDate.getText().trim();
+        LocalDate fechaVenta = validarFechaIngresada(fechaTexto);
+        if (fechaVenta == null) {
+            return;
+        }
+
+        String tituloSeleccionado = (String) ComboBoxLibros.getSelectedItem();
+        if (tituloSeleccionado == null) {
+            JOptionPane.showMessageDialog(this, "Seleccione un libro.");
+            return;
+        }
+
+        String cantidadTexto = txtMonto.getText().trim();
+        if (cantidadTexto.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese la cantidad.");
+            return;
+        }
+
+        String nitCliente = txtID_NIT.getText().trim();
+        String nombreCliente = txtNombre_Cliente.getText().trim();
+        String direccionCliente = txtAddress.getText().trim();
+
+        if (nitCliente.isEmpty() || nombreCliente.isEmpty() || direccionCliente.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Complete los datos del cliente (NIT, Nombre, Direccion).");
+            return;
+        }
+        int cantidad;
+        try {
+            cantidad = Integer.parseInt(cantidadTexto);
+            if (cantidad <= 0) {
+                JOptionPane.showMessageDialog(this, "La cantidad debe ser mayor a 0.");
                 return;
             }
-
-            int item = carrito.size() + 1;
-            carrito.add(new DetalleVenta(nitCliente,nombreCliente,direccionCliente,item,libro,cantidad,fechaVenta,usuarioActual.getUsuario()));
-            libro.setStock(libro.getStock() - cantidad);
-            actualizarTablaCarrito();
-            actualizarTotalAcumulado();
-            txtMonto.setText("");
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Cantidad inválida.");
             return;
         }
+
+        for (LibroenInventario libro : Proyectob.libros) {
+            if (libro.getTitulo().equals(tituloSeleccionado)) {
+                if (libro.getStock() < cantidad) {
+                    JOptionPane.showMessageDialog(this, "Stock insuficiente.");
+                    return;
+                }
+
+                int item = carrito.size() + 1;
+                carrito.add(new DetalleVenta(nitCliente, nombreCliente, direccionCliente, item, libro, cantidad, fechaVenta, usuarioActual.getUsuario()));
+                libro.setStock(libro.getStock() - cantidad);
+                actualizarTablaCarrito();
+                actualizarTotalAcumulado();
+                txtMonto.setText("");
+                return;
+            }
+        }
     }
-}
+
     private void actualizarTablaCarrito() {
         String[] encabezados = {"Item", "Libro", "Precio Unitario", "Cantidad", "Subtotal"};
         javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel(encabezados, carrito.size());
@@ -178,26 +191,29 @@ public class RegistrarVenta extends javax.swing.JFrame {
 
         tblCart.setModel(modelo);
     }
+
     private void actualizarTotalAcumulado() {
-    double total = 0;
-    for (DetalleVenta d : carrito) {
-        total += d.getSubtotal();
+        double total = 0;
+        for (DetalleVenta d : carrito) {
+            total += d.getSubtotal();
+        }
+        lblTotalAllBooks.setText("Total a Pagar: Q" + String.format("%.2f", total));
+        TotalSinIva();
     }
-    lblTotalAllBooks.setText("Total a Pagar: Q" + String.format("%.2f", total));
-    TotalSinIva();       
-}
+
     private void confirmarVenta() {
-        
-    String fechaTexto = txtDate.getText().trim();
+
+        String fechaTexto = txtDate.getText().trim();
         LocalDate fechaVenta = validarFechaIngresada(fechaTexto);
-        if (fechaVenta == null) return;
-    
+        if (fechaVenta == null) {
+            return;
+        }
+
         if (carrito.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "No hay productos en el carrito.");
-        return;
-    }
-        
-        
+            JOptionPane.showMessageDialog(this, "No hay productos en el carrito.");
+            return;
+        }
+
         String numeroFactura = numeroFacturaGenerado;
         // Obtener datos del cliente
         String nombreCliente = txtNombre_Cliente.getText().trim();
@@ -217,36 +233,31 @@ public class RegistrarVenta extends javax.swing.JFrame {
 
         // Crear la venta
         CompiladoVenta venta = new CompiladoVenta(
-            numeroFactura,
-            nombreCliente,
-            nit,
-            direccion,
-            totalSinIva,
-            totalFinal,
-            usuarioActual,
-            fechaVenta,
-            detallesActuales
+                numeroFactura,
+                nombreCliente,
+                nit,
+                direccion,
+                totalSinIva,
+                totalFinal,
+                usuarioActual,
+                fechaVenta,
+                detallesActuales
         );
         venta.setCupon(cuponAplicado); // ✅ << aquí se guarda el cupón usado
-        // Guardar en lista global
-        Proyectob.ventas.add(venta);
-        PuntosExtra.guardarArchivo(Proyectob.ventas, "ventas.dat");
+        Proyectob.ventas.add(venta);    // Guardar en lista global
+        PuntosExtra.guardarTodo();
+        JOptionPane.showMessageDialog(this, "Venta Exitosa");
 
-
-       JOptionPane.showMessageDialog(this, "Venta Exitosa");
-       PuntosExtra.guardarArchivo(carrito, "Reporte_Ventas.dat");
-
-    // Limpiar carrito y tabla
-    carrito.clear();
-    actualizarTablaCarrito();
-    lblTotalIndividual.setText("Total a Pagar");
-    txtMonto.setText("");
+        // Limpiar carrito y tabla
+        carrito.clear();
+        actualizarTablaCarrito();
+        lblTotalIndividual.setText("Total a Pagar");
+        txtMonto.setText("");
     }
-    
+
     private Cupon cuponAplicado = null;
     private double totalConDescuento = 0.00;
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -494,57 +505,57 @@ public class RegistrarVenta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmActionPerformed
-            confirmarVenta();
+        confirmarVenta();
     }//GEN-LAST:event_btnConfirmActionPerformed
 
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
-                this.dispose();
+        this.dispose();
     }//GEN-LAST:event_btnCloseActionPerformed
 
     private void btnAddtoCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddtoCartActionPerformed
-            agregarAlCarrito();
+        agregarAlCarrito();
     }//GEN-LAST:event_btnAddtoCartActionPerformed
 
     private void btnAPlicarCuponActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAPlicarCuponActionPerformed
         // TODO add your handling code here:
-       if (cuponAplicado != null) {
-        JOptionPane.showMessageDialog(this, "Ya se ha aplicado un cupón: " + cuponAplicado.getCodigo());
-        return;
-    }
+        if (cuponAplicado != null) {
+            JOptionPane.showMessageDialog(this, "Ya se ha aplicado un cupón: " + cuponAplicado.getCodigo());
+            return;
+        }
 
-    String codigoSeleccionado = (String) ComboCupones.getSelectedItem();
-    if (codigoSeleccionado == null) {
-        JOptionPane.showMessageDialog(this, "Seleccione un cupón.");
-        return;
-    }
+        String codigoSeleccionado = (String) ComboCupones.getSelectedItem();
+        if (codigoSeleccionado == null) {
+            JOptionPane.showMessageDialog(this, "Seleccione un cupón.");
+            return;
+        }
 
-    Cupon cupon = Proyectob.cupones.stream()
-        .filter(c -> c.getCodigo().equalsIgnoreCase(codigoSeleccionado))
-        .findFirst()
-        .orElse(null);
+        Cupon cupon = Proyectob.cupones.stream()
+                .filter(c -> c.getCodigo().equalsIgnoreCase(codigoSeleccionado))
+                .findFirst()
+                .orElse(null);
 
-    if (cupon == null) {
-        JOptionPane.showMessageDialog(this, "Error interno: Cupón no encontrado.");
-        return;
-    }
+        if (cupon == null) {
+            JOptionPane.showMessageDialog(this, "Error interno: Cupón no encontrado.");
+            return;
+        }
 
-    double total = 0;
-    for (DetalleVenta d : carrito) {
-        total += d.getSubtotal();
-    }
+        double total = 0;
+        for (DetalleVenta d : carrito) {
+            total += d.getSubtotal();
+        }
 
-    double descuento = cupon.isEsPorcentaje()
-        ? total * (cupon.getValor() / 100)
-        : cupon.getValor();
+        double descuento = cupon.isEsPorcentaje()
+                ? total * (cupon.getValor() / 100)
+                : cupon.getValor();
 
-    totalConDescuento = Math.max(0, total - descuento);
-    cuponAplicado = cupon;
+        totalConDescuento = Math.max(0, total - descuento);
+        cuponAplicado = cupon;
 
-    lblTotConDescuento.setText("Total con descuento: Q" + String.format("%.2f", totalConDescuento));
-    JOptionPane.showMessageDialog(this, "Cupón aplicado exitosamente.");      
-           
+        lblTotConDescuento.setText("Total con descuento: Q" + String.format("%.2f", totalConDescuento));
+        JOptionPane.showMessageDialog(this, "Cupón aplicado exitosamente.");
+
     }//GEN-LAST:event_btnAPlicarCuponActionPerformed
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboBoxLibros;
     private javax.swing.JComboBox<String> ComboCupones;
